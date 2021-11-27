@@ -11,7 +11,8 @@ namespace saloonAPI.Models.Authentication
         public int Id { get; set; }
         [MaxLength(15)]
         public string ContactNo { get; set; }
-        public int UserId { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public string UserId { get; set; }
         public ApplicationUser User { get; set; }
     }
 }

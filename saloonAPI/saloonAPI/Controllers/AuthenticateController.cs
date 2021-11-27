@@ -57,6 +57,22 @@ namespace saloonAPI.Controllers
                 await userManager.AddToRoleAsync(user, UserRoles.User);
             }
 
+            List<CustomerTelNumber> telNumbers = new();
+            foreach (var telNo in model.TelNumbers)
+            {
+                telNumbers.Add(new CustomerTelNumber()
+                {
+                    UserId = user.Id,
+                    ContactNo = telNo,
+                    CreatedDate = DateTime.Now
+                });
+            }
+
+            user.TelNumbers = telNumbers;
+            result = await userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+                return BadRequest(result);
+
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }
 
@@ -87,6 +103,22 @@ namespace saloonAPI.Controllers
             {
                 await userManager.AddToRoleAsync(user, UserRoles.Admin);
             }
+
+            List<CustomerTelNumber> telNumbers = new();
+            foreach (var telNo in model.TelNumbers)
+            {
+                telNumbers.Add(new CustomerTelNumber()
+                {
+                    UserId = user.Id,
+                    ContactNo = telNo,
+                    CreatedDate = DateTime.Now
+                });
+            }
+
+            user.TelNumbers = telNumbers;
+            result = await userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+                return BadRequest(result);
 
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }

@@ -14,7 +14,7 @@ namespace saloonAPI.Models
         public DateTime ExpireDate { get; set; }
         [Range(0, int.MaxValue)]
         public int Points { get; set; }
-        public int CreatedUserId { get; set; }
+        public string CreatedUserId { get; set; }
         public ApplicationUser CreatedUser { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace saloonAPI.Models
         public bool MarketingEmails { get; set; }
         public bool AllowProducts { get; set; }
         public bool Reminders { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public ApplicationUser User { get; set; }
     }
 }

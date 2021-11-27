@@ -15,7 +15,7 @@ namespace saloonAPI.Models
         public DateTime AppoinmentDate { get; set; }
         public DateTime? CompletedDate { get; set; }
         public DateTime CreatedDate { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public ApplicationUser User { get; set; }
     }
 }

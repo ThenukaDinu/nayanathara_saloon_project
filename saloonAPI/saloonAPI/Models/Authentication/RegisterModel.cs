@@ -14,5 +14,6 @@ namespace saloonAPI.Models.Authentication
 
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
+        public List<string> TelNumbers { get; set; }
     }
 }
