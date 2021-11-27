@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using saloonAPI.Models;
 
 namespace saloonAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211127072417_createDataBaseTables")]
+    partial class createDataBaseTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -300,64 +302,6 @@ namespace saloonAPI.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("saloonAPI.Models.Coupon", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CreatedUserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedUserId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("ExpireDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Points")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedUserId1");
-
-                    b.ToTable("Coupons");
-                });
-
-            modelBuilder.Entity("saloonAPI.Models.CustomerSetting", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("AllowProducts")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("MarketingEmails")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Reminders")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId1");
-
-                    b.ToTable("CustomerSettings");
-                });
-
             modelBuilder.Entity("saloonAPI.Models.Invoice", b =>
                 {
                     b.Property<int>("Id")
@@ -495,31 +439,6 @@ namespace saloonAPI.Migrations
                     b.ToTable("QRs");
                 });
 
-            modelBuilder.Entity("saloonAPI.Models.UserCoupon", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CouponId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CouponId");
-
-                    b.HasIndex("UserId1");
-
-                    b.ToTable("UserCoupons");
-                });
-
             modelBuilder.Entity("saloonAPI.Models.UserProduct", b =>
                 {
                     b.Property<int>("Id")
@@ -614,24 +533,6 @@ namespace saloonAPI.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("saloonAPI.Models.Coupon", b =>
-                {
-                    b.HasOne("saloonAPI.Models.Authentication.ApplicationUser", "CreatedUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedUserId1");
-
-                    b.Navigation("CreatedUser");
-                });
-
-            modelBuilder.Entity("saloonAPI.Models.CustomerSetting", b =>
-                {
-                    b.HasOne("saloonAPI.Models.Authentication.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId1");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("saloonAPI.Models.Invoice", b =>
                 {
                     b.HasOne("saloonAPI.Models.Appoinment", "Appoinment")
@@ -694,23 +595,6 @@ namespace saloonAPI.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("saloonAPI.Models.UserCoupon", b =>
-                {
-                    b.HasOne("saloonAPI.Models.Coupon", "Coupon")
-                        .WithMany()
-                        .HasForeignKey("CouponId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("saloonAPI.Models.Authentication.ApplicationUser", "User")
-                        .WithMany("UserCoupons")
-                        .HasForeignKey("UserId1");
-
-                    b.Navigation("Coupon");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("saloonAPI.Models.UserProduct", b =>
                 {
                     b.HasOne("saloonAPI.Models.Product", "Product")
@@ -737,8 +621,6 @@ namespace saloonAPI.Migrations
                     b.Navigation("ProductComments");
 
                     b.Navigation("TelNumbers");
-
-                    b.Navigation("UserCoupons");
 
                     b.Navigation("UserProducts");
                 });
