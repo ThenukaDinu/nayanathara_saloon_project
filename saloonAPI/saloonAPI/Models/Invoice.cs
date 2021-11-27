@@ -14,6 +14,6 @@ namespace saloonAPI.Models
         [Range(0, Double.MaxValue)]
         public double Amount { get; set; }
         public int AppoinmentId { get; set; }
-        public Appoinment Appoinment { get; set; }
+        public virtual Appoinment Appoinment { get; set; }
     }
 }

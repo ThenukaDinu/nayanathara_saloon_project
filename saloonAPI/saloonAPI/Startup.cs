@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using saloonAPI.Models;
 using saloonAPI.Models.Authentication;
+using saloonAPI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,6 +71,8 @@ namespace saloonAPI
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
                 };
             });
+
+            services.AddScoped<IDataAccessRepository, SqlService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

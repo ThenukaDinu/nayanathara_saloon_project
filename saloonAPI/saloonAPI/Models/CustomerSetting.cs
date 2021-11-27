@@ -13,6 +13,6 @@ namespace saloonAPI.Models
         public bool AllowProducts { get; set; }
         public bool Reminders { get; set; }
         public string UserId { get; set; }
-        public ApplicationUser User { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

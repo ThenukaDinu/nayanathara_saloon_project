@@ -8,11 +8,11 @@ namespace saloonAPI.Models.Authentication
 {
     public class ApplicationUser : IdentityUser
     {
-        public ICollection<CustomerTelNumber> TelNumbers { get; set; } = new List<CustomerTelNumber>();
-        public ICollection<Appoinment> Appoinments { get; set; } = new List<Appoinment>();
-        public ICollection<Like> Likes { get; set; } = new List<Like>();
-        public ICollection<ProductComment> ProductComments { get; set; } = new List<ProductComment>();
-        public ICollection<UserProduct> UserProducts { get; set; } = new List<UserProduct>();
-        public ICollection<UserCoupon> UserCoupons { get; set; } = new List<UserCoupon>();
+        public virtual ICollection<CustomerTelNumber> TelNumbers { get; set; } = new List<CustomerTelNumber>();
+        public virtual ICollection<Appoinment> Appoinments { get; set; } = new List<Appoinment>();
+        public virtual ICollection<Like> Likes { get; set; } = new List<Like>();
+        public virtual ICollection<ProductComment> ProductComments { get; set; } = new List<ProductComment>();
+        public virtual ICollection<UserProduct> UserProducts { get; set; } = new List<UserProduct>();
+        public virtual ICollection<UserCoupon> UserCoupons { get; set; } = new List<UserCoupon>();
     }
 }

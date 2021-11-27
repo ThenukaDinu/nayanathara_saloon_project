@@ -12,6 +12,6 @@ namespace saloonAPI.Models
         public string Url { get; set; }
         public DateTime CreatedDate { get; set; }
         public string UserId { get; set; }
-        public ApplicationUser User { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

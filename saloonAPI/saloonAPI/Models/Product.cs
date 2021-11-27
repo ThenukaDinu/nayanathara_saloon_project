@@ -17,7 +17,7 @@ namespace saloonAPI.Models
         public int Quentity { get; set; }
         [MaxLength(100)]
         public string Description { get; set; }
-        public ICollection<Like> Likes { get; set; } = new List<Like>();
-        public ICollection<ProductComment> ProductComments { get; set; } = new List<ProductComment>();
+        public virtual ICollection<Like> Likes { get; set; } = new List<Like>();
+        public virtual ICollection<ProductComment> ProductComments { get; set; } = new List<ProductComment>();
     }
 }

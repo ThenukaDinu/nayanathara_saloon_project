@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using saloonAPI.Models;
 using saloonAPI.Models.Authentication;
+using saloonAPI.Services;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -23,12 +24,14 @@ namespace saloonAPI.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IConfiguration _configuration;
+        private readonly IDataAccessRepository _sqlService;
 
-        public AuthenticateController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public AuthenticateController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, IDataAccessRepository dataAccessRepository)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
             _configuration = configuration;
+            _sqlService = dataAccessRepository;
         }
 
         [HttpPost]
@@ -154,11 +157,15 @@ namespace saloonAPI.Controllers
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
 
+                List<string> telNumbers = user.TelNumbers.Select(tel => tel.ContactNo).ToList();
+
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = token.ValidTo,
-                    roles = userRoles
+                    id = user.Id,
+                    userRoles,
+                    contactNumbers = telNumbers
                 });
             }
             return Unauthorized();

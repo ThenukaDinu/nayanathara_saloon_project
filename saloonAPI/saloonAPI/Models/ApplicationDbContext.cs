@@ -23,10 +23,24 @@ namespace saloonAPI.Models
         public DbSet<UserCoupon> UserCoupons { get; set; }
         public DbSet<CustomerSetting> CustomerSettings { get; set; }
 
+        public ApplicationDbContext()
+        {
+
+        }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            const string connectionString = "Server=THENUKA\\MSSQLSERVER19;Database=SaloonDB;Trusted_Connection=True;";
+            optionsBuilder.UseSqlServer(connectionString);
+
+            optionsBuilder.UseLazyLoadingProxies();
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

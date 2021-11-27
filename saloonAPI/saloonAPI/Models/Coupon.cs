@@ -15,6 +15,6 @@ namespace saloonAPI.Models
         [Range(0, int.MaxValue)]
         public int Points { get; set; }
         public string CreatedUserId { get; set; }
-        public ApplicationUser CreatedUser { get; set; }
+        public virtual ApplicationUser CreatedUser { get; set; }
     }
 }
