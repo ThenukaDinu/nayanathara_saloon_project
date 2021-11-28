@@ -1,26 +1,22 @@
-﻿using saloonAPI.Models.Authentication;
+﻿using saloonAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace saloonAPI.Models
+namespace saloonAPI.ViewModels
 {
-    public class Product
+    public class AddProduct
     {
-        public int Id { get; set; }
         [Required, MaxLength(100)]
         public string Name { get; set; }
-        [Range(0, Double.MaxValue)]
+        [Range(0, Double.MaxValue), Required]
         public double Price { get; set; }
-        [Range(0, int.MaxValue)]
+        [Range(0, int.MaxValue), Required]
         public int Quentity { get; set; }
         [MaxLength(100)]
         public string Description { get; set; }
-        public virtual ICollection<Like> Likes { get; set; } = new List<Like>();
-        public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
         public string CreatedUserId { get; set; }
-        public virtual ApplicationUser CreatedUser { get; set; }
     }
 }

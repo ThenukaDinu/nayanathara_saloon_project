@@ -10,19 +10,34 @@ namespace saloonAPI.Services
     public class SqlService : IDataAccessRepository
     {
         private readonly ApplicationDbContext _context = new ApplicationDbContext();
-        public List<CustomerTelNumber> GetTelNumbers(string userId)
+        
+        public List<Product> GetAllProducts ()
         {
-            List<CustomerTelNumber> customerTelNumbers = new List<CustomerTelNumber>();
-            var userCollection = _context.Users as IQueryable<ApplicationUser>;
+            return _context.Products.ToList();
+        }
 
-            var user = userCollection.FirstOrDefault(u => u.Id == userId);
+        public Product SaveProduct(Product product)
+        {
+            _context.Add(product);
+            _context.SaveChanges();
 
-            if (user is not null)
-            {
-                customerTelNumbers = user.TelNumbers.ToList();
-            }
+            return _context.Products.Find(product.Id);
+        }
 
-            return customerTelNumbers;
+        public Product GetProduct(int productId)
+        {
+            return _context.Products.FirstOrDefault(p => p.Id == productId);
+        }
+
+        public void UpdateProduct(Product product)
+        {
+            _context.SaveChanges();
+        }
+
+        public void DeleteProduct(Product product)
+        {
+            _context.Remove(product);
+            _context.SaveChanges();
         }
     }
 }

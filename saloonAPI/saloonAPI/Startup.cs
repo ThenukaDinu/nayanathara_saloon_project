@@ -41,6 +41,9 @@ namespace saloonAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "saloonAPI", Version = "v1" });
             });
 
+            // For AutoMapper
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             // For Entity Framework  
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConnStr3")));
 

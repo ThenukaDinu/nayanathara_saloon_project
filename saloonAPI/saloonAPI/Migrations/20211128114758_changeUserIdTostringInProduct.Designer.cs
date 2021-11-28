@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using saloonAPI.Models;
 
 namespace saloonAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211128114758_changeUserIdTostringInProduct")]
+    partial class changeUserIdTostringInProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -292,12 +294,7 @@ namespace saloonAPI.Migrations
                     b.Property<DateTime?>("EditedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("Comments");
                 });
@@ -600,13 +597,6 @@ namespace saloonAPI.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("saloonAPI.Models.Comment", b =>
-                {
-                    b.HasOne("saloonAPI.Models.Product", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("ProductId");
-                });
-
             modelBuilder.Entity("saloonAPI.Models.Coupon", b =>
                 {
                     b.HasOne("saloonAPI.Models.Authentication.ApplicationUser", "CreatedUser")
@@ -671,7 +661,7 @@ namespace saloonAPI.Migrations
                         .IsRequired();
 
                     b.HasOne("saloonAPI.Models.Product", "Product")
-                        .WithMany()
+                        .WithMany("ProductComments")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -747,9 +737,9 @@ namespace saloonAPI.Migrations
 
             modelBuilder.Entity("saloonAPI.Models.Product", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("Likes");
+
+                    b.Navigation("ProductComments");
                 });
 #pragma warning restore 612, 618
         }
