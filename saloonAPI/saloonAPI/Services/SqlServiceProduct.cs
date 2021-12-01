@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace saloonAPI.Services
 {
-    public class SqlService : IDataAccessRepository
+    public class SqlServiceProduct : IProductRepository
     {
         private readonly ApplicationDbContext _context = new ApplicationDbContext();
         

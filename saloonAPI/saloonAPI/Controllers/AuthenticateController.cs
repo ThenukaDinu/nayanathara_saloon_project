@@ -24,9 +24,9 @@ namespace saloonAPI.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IConfiguration _configuration;
-        private readonly IDataAccessRepository _sqlService;
+        private readonly IProductRepository _sqlService;
 
-        public AuthenticateController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, IDataAccessRepository dataAccessRepository)
+        public AuthenticateController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, IProductRepository dataAccessRepository)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;

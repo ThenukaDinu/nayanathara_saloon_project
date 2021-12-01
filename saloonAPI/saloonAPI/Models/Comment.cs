@@ -1,4 +1,5 @@
-﻿using System;
+﻿using saloonAPI.Models.Authentication;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,7 +10,6 @@ namespace saloonAPI.Models
     public class Comment
     {
         public int Id { get; set; }
-        [Required]
         public DateTime CreatedDate { get; set; }
         public DateTime? EditedDate { get; set; }
         [Required, MaxLength(150)]

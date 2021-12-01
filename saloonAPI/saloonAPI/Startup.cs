@@ -35,7 +35,11 @@ namespace saloonAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers()
+                 .AddNewtonsoftJson(options =>
+                  options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "saloonAPI", Version = "v1" });
@@ -75,7 +79,9 @@ namespace saloonAPI
                 };
             });
 
-            services.AddScoped<IDataAccessRepository, SqlService>();
+            services.AddScoped<IProductRepository, SqlServiceProduct>();
+            services.AddScoped<ICommentRepository, SqlServiceComment>();
+            services.AddScoped<ILikeRepository, SqlServiceLike>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

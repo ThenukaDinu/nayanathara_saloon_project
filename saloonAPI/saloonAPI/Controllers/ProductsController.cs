@@ -17,17 +17,17 @@ namespace saloonAPI.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly IDataAccessRepository _sqlService;
+        private readonly IProductRepository _sqlService;
         private readonly IMapper _mapper;
 
-        public ProductsController(IDataAccessRepository dataAccessRepository, IMapper mapper)
+        public ProductsController(IProductRepository dataAccessRepository, IMapper mapper)
         {
             _sqlService = dataAccessRepository;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<IList<Product>> GetAllProducts()
+        public ActionResult<IList<ProductDto>> GetAllProducts()
         {
             List<Product> products = _sqlService.GetAllProducts();
             var vmProducts = _mapper.Map<List<ProductDto>>(products);

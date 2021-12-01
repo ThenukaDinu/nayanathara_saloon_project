@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace saloonAPI.Services
 {
-    public interface IDataAccessRepository
+    public interface IProductRepository
     {
         public List<Product> GetAllProducts();
         public Product SaveProduct(Product product);

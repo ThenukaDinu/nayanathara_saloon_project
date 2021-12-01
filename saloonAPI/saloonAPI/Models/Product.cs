@@ -19,7 +19,7 @@ namespace saloonAPI.Models
         [MaxLength(100)]
         public string Description { get; set; }
         public virtual ICollection<Like> Likes { get; set; } = new List<Like>();
-        public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
+        public virtual ICollection<ProductComment> Comments { get; set; } = new List<ProductComment>();
         public string CreatedUserId { get; set; }
         public virtual ApplicationUser CreatedUser { get; set; }
     }
