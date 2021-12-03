@@ -286,6 +286,209 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "AddComment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGhlbnVrYXRlc3QyQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRoZW51a2F0ZXN0MkBnbWFpbC5jb20iLCJqdGkiOiJlYTMzYjI1My03Njc2LTQ3YjgtOTkyZi01OTMwYmFmZDk2NWUiLCJ1c2VySWQiOiIzZGY5ODA2MS1iYzk1LTQzNzYtODI2MC01MTA2N2Y4YTMwYzciLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNjM4MjI0MDI0LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjYxOTU1IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo0MjAwIn0.RMc5UlmvwL-FZbeYjRQ1OlPNzJ7im5f_IADrMabW6Gg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"CommentText\": \"This is Comment for product 3\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44327/api/Comment/3",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44327",
+					"path": [
+						"api",
+						"Comment",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateComment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGhlbnVrYXRlc3QyQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRoZW51a2F0ZXN0MkBnbWFpbC5jb20iLCJqdGkiOiJlYTMzYjI1My03Njc2LTQ3YjgtOTkyZi01OTMwYmFmZDk2NWUiLCJ1c2VySWQiOiIzZGY5ODA2MS1iYzk1LTQzNzYtODI2MC01MTA2N2Y4YTMwYzciLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNjM4MjI0MDI0LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjYxOTU1IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo0MjAwIn0.RMc5UlmvwL-FZbeYjRQ1OlPNzJ7im5f_IADrMabW6Gg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"CommentText\": \"This is updated Comment for product 03\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44327/api/Comment/2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44327",
+					"path": [
+						"api",
+						"Comment",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteComment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGhlbnVrYXRlc3QyQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRoZW51a2F0ZXN0MkBnbWFpbC5jb20iLCJqdGkiOiJlYTMzYjI1My03Njc2LTQ3YjgtOTkyZi01OTMwYmFmZDk2NWUiLCJ1c2VySWQiOiIzZGY5ODA2MS1iYzk1LTQzNzYtODI2MC01MTA2N2Y4YTMwYzciLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNjM4MjI0MDI0LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjYxOTU1IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo0MjAwIn0.RMc5UlmvwL-FZbeYjRQ1OlPNzJ7im5f_IADrMabW6Gg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44327/api/Comment/3",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44327",
+					"path": [
+						"api",
+						"Comment",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddLike",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGhlbnVrYXRlc3QyQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRoZW51a2F0ZXN0MkBnbWFpbC5jb20iLCJqdGkiOiI0N2QwNGIyNS0xZGNhLTQwOTQtYTNmNi0yN2Q5MzAwMDA4NzciLCJ1c2VySWQiOiIzZGY5ODA2MS1iYzk1LTQzNzYtODI2MC01MTA2N2Y4YTMwYzciLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNjM4Mzc4OTc0LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjYxOTU1IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo0MjAwIn0.ZjTKTGmc5lV5cds3K7z9yus-xJmdwq8Rdse66wu1tdE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44327/api/Like/3",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44327",
+					"path": [
+						"api",
+						"Like",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteLike",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGhlbnVrYXRlc3QyQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRoZW51a2F0ZXN0MkBnbWFpbC5jb20iLCJqdGkiOiI0N2QwNGIyNS0xZGNhLTQwOTQtYTNmNi0yN2Q5MzAwMDA4NzciLCJ1c2VySWQiOiIzZGY5ODA2MS1iYzk1LTQzNzYtODI2MC01MTA2N2Y4YTMwYzciLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNjM4Mzc4OTc0LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjYxOTU1IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo0MjAwIn0.ZjTKTGmc5lV5cds3K7z9yus-xJmdwq8Rdse66wu1tdE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44327/api/Like/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44327",
+					"path": [
+						"api",
+						"Like",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGhlbnVrYXRlc3QyQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRoZW51a2F0ZXN0MkBnbWFpbC5jb20iLCJqdGkiOiI0N2QwNGIyNS0xZGNhLTQwOTQtYTNmNi0yN2Q5MzAwMDA4NzciLCJ1c2VySWQiOiIzZGY5ODA2MS1iYzk1LTQzNzYtODI2MC01MTA2N2Y4YTMwYzciLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNjM4Mzc4OTc0LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjYxOTU1IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo0MjAwIn0.ZjTKTGmc5lV5cds3K7z9yus-xJmdwq8Rdse66wu1tdE",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }
