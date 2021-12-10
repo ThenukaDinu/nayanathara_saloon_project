@@ -61,15 +61,18 @@ namespace saloonAPI.Controllers
             }
 
             List<CustomerTelNumber> telNumbers = new();
-            foreach (var telNo in model.TelNumbers)
+            if (model.TelNumbers is not null)
             {
-                telNumbers.Add(new CustomerTelNumber()
+                foreach (var telNo in model.TelNumbers)
                 {
-                    UserId = user.Id,
-                    ContactNo = telNo,
-                    CreatedDate = DateTime.Now
-                });
-            }
+                    telNumbers.Add(new CustomerTelNumber()
+                    {
+                        UserId = user.Id,
+                        ContactNo = telNo,
+                        CreatedDate = DateTime.Now
+                    });
+                }
+            } 
 
             user.TelNumbers = telNumbers;
             result = await userManager.UpdateAsync(user);
