@@ -83,6 +83,7 @@ namespace saloonAPI
             services.AddScoped<IProductRepository, SqlServiceProduct>();
             services.AddScoped<ICommentRepository, SqlServiceComment>();
             services.AddScoped<ILikeRepository, SqlServiceLike>();
+            services.AddScoped<IAppointmentRepository, SqlServiceAppointment>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
