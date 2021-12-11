@@ -5,8 +5,6 @@ const state = {
 const mutations = {
   logout(state) {
     state.user = undefined
-    state.userData = undefined
-    state.profileData = undefined
   },
   login(state, user) {
     state.user = { ...state.user, ...user }

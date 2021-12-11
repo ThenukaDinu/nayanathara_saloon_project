@@ -34,6 +34,11 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  if (to.path === '/signIn' || to.path === 'signUp') {
+    store.commit('setIsMenuHide', true)
+  } else {
+    store.commit('setIsMenuHide', false)
+  }
   const userLoggedIn = store.state.user.user
   const isRequiredAuth = to.matched.some(record => record.meta.isRequiredAuth)
   if ((to.path === '/signIn' || to.path === '/signUp') && !userLoggedIn) {

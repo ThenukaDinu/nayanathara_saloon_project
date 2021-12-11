@@ -108,7 +108,6 @@ export default {
           }
         },
         response => {
-          console.log(response)
           this.$store.dispatch('loginUser', response.data)
           this.$router.push('/')
         },
