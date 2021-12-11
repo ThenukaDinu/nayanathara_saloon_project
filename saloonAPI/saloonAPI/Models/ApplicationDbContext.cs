@@ -35,7 +35,8 @@ namespace saloonAPI.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            const string connectionString = "Server=THENUKA\\MSSQLSERVER19;Database=SaloonDB;Trusted_Connection=True;";
+            //LAPTOP - IIJI8PGU
+            const string connectionString = "Server=LAPTOP-IIJI8PGU;Database=SaloonDB;Trusted_Connection=True;";
             optionsBuilder.UseSqlServer(connectionString);
 
             optionsBuilder.UseLazyLoadingProxies();
