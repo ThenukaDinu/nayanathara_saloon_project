@@ -34,6 +34,7 @@ namespace saloonAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
 
             services.AddControllers()
                  .AddNewtonsoftJson(options =>
@@ -94,7 +95,9 @@ namespace saloonAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "saloonAPI v1"));
             }
-
+            app.UseCors(
+                options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyMethod().AllowAnyHeader()
+            );
             app.UseHttpsRedirection();
 
             app.UseRouting();
