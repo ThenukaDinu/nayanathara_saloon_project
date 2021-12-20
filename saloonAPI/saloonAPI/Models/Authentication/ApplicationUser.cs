@@ -14,5 +14,7 @@ namespace saloonAPI.Models.Authentication
         public virtual ICollection<ProductComment> ProductComments { get; set; } = new List<ProductComment>();
         public virtual ICollection<UserProduct> UserProducts { get; set; } = new List<UserProduct>();
         public virtual ICollection<UserCoupon> UserCoupons { get; set; } = new List<UserCoupon>();
+        public int SettingId { get; set; }
+        public virtual CustomerSetting Settings { get; set; }
     }
 }

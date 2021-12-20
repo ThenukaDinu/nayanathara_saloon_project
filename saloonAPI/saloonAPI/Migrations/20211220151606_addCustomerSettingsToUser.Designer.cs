@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using saloonAPI.Models;
 
 namespace saloonAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211220151606_addCustomerSettingsToUser")]
+    partial class addCustomerSettingsToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -447,31 +449,6 @@ namespace saloonAPI.Migrations
                     b.ToTable("OrderDetails");
                 });
 
-            modelBuilder.Entity("saloonAPI.Models.OrderInvoice", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("InvoiceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InvoiceId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("OrderInvoices");
-                });
-
             modelBuilder.Entity("saloonAPI.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -764,25 +741,6 @@ namespace saloonAPI.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("saloonAPI.Models.OrderInvoice", b =>
-                {
-                    b.HasOne("saloonAPI.Models.Invoice", "Invoice")
-                        .WithMany("OrderInvoices")
-                        .HasForeignKey("InvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("saloonAPI.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Invoice");
-
-                    b.Navigation("Order");
-                });
-
             modelBuilder.Entity("saloonAPI.Models.Product", b =>
                 {
                     b.HasOne("saloonAPI.Models.Authentication.ApplicationUser", "CreatedUser")
@@ -886,11 +844,6 @@ namespace saloonAPI.Migrations
                     b.Navigation("UserCoupons");
 
                     b.Navigation("UserProducts");
-                });
-
-            modelBuilder.Entity("saloonAPI.Models.Invoice", b =>
-                {
-                    b.Navigation("OrderInvoices");
                 });
 
             modelBuilder.Entity("saloonAPI.Models.Order", b =>

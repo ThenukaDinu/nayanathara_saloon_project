@@ -72,9 +72,18 @@ namespace saloonAPI.Controllers
                         CreatedDate = DateTime.Now
                     });
                 }
-            } 
+            }
+
+            CustomerSetting customerSetting = new CustomerSetting
+            {
+                AllowProducts = true,
+                MarketingEmails = true,
+                Reminders = true,
+                UserId = user.Id
+            };
 
             user.TelNumbers = telNumbers;
+            user.Settings = customerSetting;
             result = await userManager.UpdateAsync(user);
             if (!result.Succeeded)
                 return BadRequest(result);
@@ -121,7 +130,16 @@ namespace saloonAPI.Controllers
                 });
             }
 
+            CustomerSetting customerSetting = new CustomerSetting
+            {
+                AllowProducts = true,
+                MarketingEmails = true,
+                Reminders = true,
+                UserId = user.Id
+            };
+
             user.TelNumbers = telNumbers;
+            user.Settings = customerSetting;
             result = await userManager.UpdateAsync(user);
             if (!result.Succeeded)
                 return BadRequest(result);
@@ -169,13 +187,14 @@ namespace saloonAPI.Controllers
                     expiration = token.ValidTo,
                     id = user.Id,
                     userRoles,
-                    contactNumbers = telNumbers
+                    contactNumbers = telNumbers,
+                    settings = user.Settings
                 });
             }
             return Unauthorized();
         }
 
-        [Route("TestGuest")]
+        [Route("TestGuest")] 
         public IActionResult TestGuest()
         {
             return Ok();

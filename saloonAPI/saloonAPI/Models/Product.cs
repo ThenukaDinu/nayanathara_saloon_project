@@ -22,5 +22,6 @@ namespace saloonAPI.Models
         public virtual ICollection<ProductComment> Comments { get; set; } = new List<ProductComment>();
         public string CreatedUserId { get; set; }
         public virtual ApplicationUser CreatedUser { get; set; }
+        public virtual ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
     }
 }

@@ -7,8 +7,14 @@ import * as Cookies from 'js-cookie'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
+  state: {
+    isMenuHide: true
+  },
+  mutations: {
+    setIsMenuHide(state, payload) {
+      state.isMenuHide = payload
+    }
+  },
   actions: {},
   modules: {
     user: user
