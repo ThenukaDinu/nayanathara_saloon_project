@@ -25,6 +25,7 @@ namespace saloonAPI.Models
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<OrderInvoice> OrderInvoices { get; set; }
 
         public ApplicationDbContext()
         {
