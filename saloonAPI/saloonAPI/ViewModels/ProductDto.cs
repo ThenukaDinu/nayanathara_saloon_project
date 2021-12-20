@@ -18,5 +18,6 @@ namespace saloonAPI.ViewModels
         public virtual List<Like> Likes { get; set; } = new List<Like>();
         public virtual List<ProductComment> Comments { get; set; } = new List<ProductComment>();
         public string CreatedUserId { get; set; }
+        public virtual ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
     }
 }
