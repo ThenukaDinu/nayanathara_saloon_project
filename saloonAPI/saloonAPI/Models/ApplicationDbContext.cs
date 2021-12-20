@@ -22,6 +22,9 @@ namespace saloonAPI.Models
         public DbSet<Coupon> Coupons { get; set; }
         public DbSet<UserCoupon> UserCoupons { get; set; }
         public DbSet<CustomerSetting> CustomerSettings { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
 
         public ApplicationDbContext()
         {
@@ -36,7 +39,8 @@ namespace saloonAPI.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //LAPTOP - IIJI8PGU
-            const string connectionString = "Server=LAPTOP-IIJI8PGU;Database=SaloonDB;Trusted_Connection=True;";
+            //THENUKA\\MSSQLSERVER19
+            const string connectionString = "Server=THENUKA\\MSSQLSERVER19;Database=SaloonDB;Trusted_Connection=True;";
             optionsBuilder.UseSqlServer(connectionString);
 
             optionsBuilder.UseLazyLoadingProxies();

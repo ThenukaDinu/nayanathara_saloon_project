@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using saloonAPI.Models;
 
 namespace saloonAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211220142345_productImageTableAdded")]
+    partial class productImageTableAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -400,48 +402,6 @@ namespace saloonAPI.Migrations
                     b.ToTable("Likes");
                 });
 
-            modelBuilder.Entity("saloonAPI.Models.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CustomerId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("saloonAPI.Models.OrderDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderDetails");
-                });
-
             modelBuilder.Entity("saloonAPI.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -706,34 +666,6 @@ namespace saloonAPI.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("saloonAPI.Models.Order", b =>
-                {
-                    b.HasOne("saloonAPI.Models.Authentication.ApplicationUser", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId");
-
-                    b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("saloonAPI.Models.OrderDetail", b =>
-                {
-                    b.HasOne("saloonAPI.Models.Order", "Order")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("saloonAPI.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("saloonAPI.Models.Product", b =>
                 {
                     b.HasOne("saloonAPI.Models.Authentication.ApplicationUser", "CreatedUser")
@@ -835,11 +767,6 @@ namespace saloonAPI.Migrations
                     b.Navigation("UserCoupons");
 
                     b.Navigation("UserProducts");
-                });
-
-            modelBuilder.Entity("saloonAPI.Models.Order", b =>
-                {
-                    b.Navigation("OrderDetails");
                 });
 
             modelBuilder.Entity("saloonAPI.Models.Product", b =>
