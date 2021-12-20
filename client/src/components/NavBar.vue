@@ -1,25 +1,20 @@
 <template>
   <nav>
     <ul class="menu">
-      <li class="logo"><a href="#">Nayanathara Saloons</a></li>
-      <li class="item"><a href="#">Home</a></li>
-      <li class="item"><a href="#">About</a></li>
-      <li class="item has-submenu">
-        <a tabindex="0">Services</a>
-        <ul class="submenu">
-          <li class="subitem"><a href="#">Design</a></li>
-          <li class="subitem"><a href="#">Development</a></li>
-          <li class="subitem"><a href="#">SEO</a></li>
-          <li class="subitem"><a href="#">Copywriting</a></li>
-        </ul>
+      <li class="logo">
+        <router-link exact :style="{ color: '#fff !important' }" to="/"
+          >Nayanathara Saloons</router-link
+        >
       </li>
-      <li class="item has-submenu">
-        <a tabindex="0">Plans</a>
-        <ul class="submenu">
-          <li class="subitem"><a href="#">Freelancer</a></li>
-          <li class="subitem"><a href="#">Startup</a></li>
-          <li class="subitem"><a href="#">Enterprise</a></li>
-        </ul>
+      <li class="item"><router-link class="item" to="/">Home</router-link></li>
+      <li class="item">
+        <router-link class="item" to="/about">About</router-link>
+      </li>
+      <li class="item">
+        <router-link class="item" to="/products">Products</router-link>
+      </li>
+      <li class="item">
+        <a>Plans</a>
       </li>
       <li class="item"><a href="#">Blog</a></li>
       <li class="item"><a href="#">Contact</a></li>
@@ -37,6 +32,13 @@ export default {
   data() {
     return {
       //
+    }
+  },
+  props: {
+    name: {
+      type: String,
+      required: false,
+      default: 'no name'
     }
   },
   computed: {
@@ -102,6 +104,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 /* Basic styling */
+@import '@/assets/styles/variables.scss';
+.router-link-exact-active {
+  color: $color1 !important;
+}
 * {
   box-sizing: border-box;
   padding: 0;
@@ -112,7 +118,7 @@ body {
   font-size: 16px;
 }
 nav {
-  background: #39674e;
+  background: $color3;
   padding: 0 15px;
 }
 a {
@@ -137,16 +143,13 @@ a {
 }
 .item:not(.button) a:hover,
 .item a {
-  color: #fff;
+  color: $color1;
 }
 .v-application a {
   color: #fff;
 }
-.item a:hover::after {
-  color: #c4af7e;
-}
 .menu::ng-deep li ::ng-deep a:hover {
-  color: #c4af7e;
+  color: $color1;
 }
 /* Mobile menu */
 .menu {
@@ -277,7 +280,7 @@ a {
     position: absolute;
     left: 0;
     top: 68px;
-    background: #56896c;
+    background: $color2;
   }
   .toggle {
     display: none;

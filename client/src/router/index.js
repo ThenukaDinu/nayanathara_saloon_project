@@ -24,6 +24,15 @@ const routes = [
     meta: {
       isRequiredAuth: false
     }
+  },
+  {
+    path: '/products',
+    name: 'Products',
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/products/Products.vue'),
+    meta: {
+      isRequiredAuth: false
+    }
   }
 ]
 

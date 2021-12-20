@@ -42,7 +42,12 @@
                 >
               </div>
               <div class="mt-2">
-                <v-btn class="mr-4 mt-5" @click="submit" color="green">
+                <v-btn
+                  class="mr-4 mt-5"
+                  @click="submit"
+                  color="green"
+                  :loading="signInLoading"
+                >
                   Sign in
                 </v-btn>
                 <v-btn class="mt-5" @click="clear"> clear </v-btn>
@@ -68,7 +73,8 @@ export default {
   data: () => ({
     password: '',
     email: '',
-    show1: false
+    show1: false,
+    signInLoading: false
   }),
   computed: {
     passwordErrors() {
@@ -98,6 +104,7 @@ export default {
       this.email = ''
     },
     async signIn() {
+      this.signInLoading = true
       await this.emailLogin(
         {
           url: '/Authenticate/login',
@@ -108,10 +115,12 @@ export default {
           }
         },
         response => {
+          this.signInLoading = false
           this.$store.dispatch('loginUser', response.data)
           this.$router.push('/')
         },
         error => {
+          this.signInLoading = false
           console.error(error.response)
           if (error.response.status)
             this.$toast.error('Please enter valid email and password')
