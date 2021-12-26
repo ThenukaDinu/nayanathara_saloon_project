@@ -52,7 +52,9 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch('logoutUser')
-      this.$router.push('/signIn')
+      setTimeout(() => {
+        this.$router.push('/')
+      }, 500)
     },
     toggleMenu() {
       const toggle = document.querySelector('.toggle')

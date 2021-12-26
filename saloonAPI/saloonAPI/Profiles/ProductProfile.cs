@@ -13,7 +13,7 @@ namespace saloonAPI.Profiles
         public ProductProfile()
         {
             CreateMap<Product, ProductDto>();
-            CreateMap<AddProduct, Product>();
+            CreateMap<AddProduct, Product>().ForMember(e => e.ProductImages, opt => opt.Ignore());
             CreateMap<EditProduct, Product>()
                 .ForMember(e => e.CreatedUserId, opt => opt.UseDestinationValue())
                 .ForMember(e => e.Comments, opt => opt.UseDestinationValue())

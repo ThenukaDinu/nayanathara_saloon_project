@@ -1,4 +1,5 @@
-﻿using saloonAPI.Models;
+﻿using Microsoft.AspNetCore.Http;
+using saloonAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,5 +19,6 @@ namespace saloonAPI.ViewModels
         [MaxLength(100)]
         public string Description { get; set; }
         public string CreatedUserId { get; set; }
+        public List<IFormFile> ProductImages { get; set; }
     }
 }
