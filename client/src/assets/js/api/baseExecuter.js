@@ -24,7 +24,8 @@ export default {
                 : object.data && object.data.token
                 ? object.data.token
                 : ''
-            }`
+            }`,
+            ...(object.headers || {})
           }
         }
         if (object.data) {

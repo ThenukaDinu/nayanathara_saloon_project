@@ -1,5 +1,11 @@
 <template>
-  <v-card v-if="product" :loading="loading" class="my-7 mx-4" max-width="300">
+  <v-card
+    v-if="product"
+    :loading="loading"
+    class="product my-7 mx-3"
+    max-width="287"
+    v-show="product.isShow"
+  >
     <template slot="progress">
       <v-progress-linear
         color="deep-purple"
@@ -7,66 +13,45 @@
         indeterminate
       ></v-progress-linear>
     </template>
-
     <v-img
       height="250"
-      src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+      :src="'https://cdn.vuetifyjs.com/images/cards/cooking.png'"
     ></v-img>
 
-    <v-card-title>Cafe Badilico</v-card-title>
+    <v-card-title>{{ product.name }}</v-card-title>
 
     <v-card-text>
-      <v-row align="center" class="mx-0">
-        <v-rating
-          :value="4.5"
-          color="amber"
-          dense
-          half-increments
-          readonly
-          size="14"
-        ></v-rating>
+      <Like :product="product" />
 
-        <div class="grey--text ms-4">4.5 (413)</div>
-      </v-row>
-
-      <div class="my-4 text-subtitle-1">$ • Italian, Cafe</div>
+      <div class="my-4 overline">
+        <b>LKR {{ product.price }}</b>
+      </div>
 
       <div>
-        Small plates, salads & sandwiches - an intimate setting with 12 indoor
-        seats plus patio seating.
+        {{ product.description }}
       </div>
     </v-card-text>
-
     <v-divider class="mx-4"></v-divider>
-
-    <v-card-title>Tonight's availability</v-card-title>
-
-    <v-card-text>
-      <v-chip-group
-        v-model="selection"
-        active-class="deep-purple accent-4 white--text"
-        column
-      >
-        <v-chip>5:30PM</v-chip>
-
-        <v-chip>7:30PM</v-chip>
-
-        <v-chip>8:00PM</v-chip>
-
-        <v-chip>9:00PM</v-chip>
-      </v-chip-group>
-    </v-card-text>
-
+    <DeleteConfirmation
+      ref="deleteConfirmationRef"
+      :product="product"
+      @delete-product="deleteProductConfirm"
+      @delete-reject="deleteReject"
+    />
     <v-card-actions>
-      <v-btn color="deep-purple lighten-2" text @click="reserve">
-        Reserve
+      <v-btn v-if="isUserAdmin" color="error" outlined @click="deleteProduct">
+        Delete
       </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 <script>
+import Like from './Like.vue'
+import DeleteConfirmation from './models/DeleteConfirmation.vue'
+import product from '@/assets/js/api/product'
 export default {
   name: 'product',
+  mixins: [product],
   props: {
     product: {
       type: Object,
@@ -79,12 +64,54 @@ export default {
     selection: 1
   }),
   methods: {
-    reserve() {
+    deleteReject() {
+      this.loading = false
+    },
+    deleteProduct() {
       this.loading = true
-
-      setTimeout(() => (this.loading = false), 2000)
+      this.$refs.deleteConfirmationRef.openModal()
+    },
+    async deleteProductConfirm(productId) {
+      this.deleteProductFromDB(
+        {
+          url: `/Products/${productId}`,
+          method: 'DELETE'
+        },
+        () => {
+          this.loading = false
+          this.$emit('product-deleted', productId)
+        },
+        error => {
+          console.error(error)
+          this.$toast.error('product delete failed please contact support')
+        }
+      )
+      this.$refs.deleteConfirmationRef.closeModal()
     }
-  }
+  },
+  mounted() {},
+  computed: {
+    user() {
+      return this.$store.state.user.user
+    },
+    isUserAdmin() {
+      return this.user && this.user.userRoles
+        ? this.user.userRoles.some(role => role === 'Admin')
+        : false
+    }
+  },
+  components: { Like, DeleteConfirmation }
 }
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+.product {
+  cursor: pointer;
+  position: relative;
+  bottom: 0;
+  transition: all ease 0.5s !important;
+}
+.product:hover {
+  bottom: 10px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2) !important;
+}
+</style>

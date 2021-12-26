@@ -1,12 +1,9 @@
 <template>
   <div class="products">
-    <AddNewProduct :showAddNewModal="showAddNewModal" />
+    <AddNewProduct ref="addNewProductRef" @save-product="saveProduct" />
     <v-row>
       <v-col>
-        <v-btn
-          class="ml-3 mt-7 white--text"
-          color="#56896c"
-          @click="() => (showAddNewModal = true)"
+        <v-btn class="ml-3 mt-7 white--text" color="#56896c" @click="openModel"
           >Add new product</v-btn
         >
       </v-col>
@@ -20,16 +17,22 @@
             ></v-text-field>
           </v-col>
           <v-col cols="3">
-            <v-btn class="mr-3 mt-7 white--text" color="primary">Search</v-btn>
+            <v-btn
+              class="mr-3 mt-7 white--text"
+              color="primary"
+              @click="searchProducts"
+              >Search</v-btn
+            >
           </v-col>
         </v-row>
       </v-col>
     </v-row>
-    <div v-if="!loading" class="product-wrapper">
+    <div v-if="!loading" class="product-wrapper mx-2">
       <Product
         v-for="(product, index) in products"
         :product="product"
         :key="index"
+        @product-deleted="productDeleted"
       />
     </div>
     <div v-else class="loadingProgress">
@@ -52,10 +55,14 @@ export default {
   data: () => ({
     products: [],
     loading: false,
-    searchProduct: '',
-    showAddNewModal: false
+    s: '',
+    showAddNewModal: false,
+    searchProduct: ''
   }),
   methods: {
+    productDeleted(productId) {
+      this.products = this.products.filter(p => p.id !== productId)
+    },
     async getAllProducts() {
       this.loading = true
       const data = {
@@ -66,14 +73,76 @@ export default {
         data,
         response => {
           this.loading = false
-          console.log(response)
-          this.products = response.data
+          this.products = response.data.map(o => {
+            return {
+              ...o,
+              isShow: true
+            }
+          })
         },
         error => {
           this.loading = false
           console.error(error)
         }
       )
+    },
+    openModel() {
+      this.$refs.addNewProductRef.openModel()
+    },
+    closeModel() {
+      this.$refs.addNewProductRef.closeModel()
+    },
+    async saveProduct(product) {
+      this.$refs.addNewProductRef.startLoading()
+      const formData = new FormData()
+      formData.append('Name', product.Name)
+      formData.append('Description', product.Description)
+      formData.append('Price', product.Price)
+      formData.append('Quentity', product.Quentity)
+      product.ProductImages.forEach(p => formData.append('ProductImages', p))
+
+      const data = {
+        url: '/Products',
+        method: 'POST',
+        data: formData,
+        headers: { 'Content-Type': 'multipart/form-data' }
+      }
+
+      await this.postProduct(
+        data,
+        response => {
+          response.data.isShow = true
+          this.products.push(response.data)
+          this.$refs.addNewProductRef.stopLoading()
+          this.closeModel()
+          this.$toast.success('Product created successfully')
+        },
+        error => {
+          this.$refs.addNewProductRef.stopLoading()
+          for (const [key, value] of Object.entries(
+            error.response.data.errors
+          )) {
+            console.log(key)
+            value.forEach(v => {
+              this.$toast.error(v)
+            })
+          }
+          console.error(error)
+        }
+      )
+    },
+    searchProducts() {
+      const query = this.searchProduct.toString().toLowerCase()
+      const filteredItems = this.products.filter(
+        p => p.name.toLowerCase().indexOf(query) >= 0
+      )
+      this.products.forEach(p => {
+        if (filteredItems.some(fi => fi.id === p.id)) {
+          p.isShow = true
+        } else {
+          p.isShow = false
+        }
+      })
     }
   },
   async created() {
@@ -81,6 +150,7 @@ export default {
   }
 }
 </script>
+
 <style lang="scss" scoped>
 @import '@/assets/styles/variables.scss';
 v .loadingProgress {
