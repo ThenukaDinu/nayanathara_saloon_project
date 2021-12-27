@@ -25,18 +25,18 @@ namespace saloonAPI.Controllers
         }
 
         [HttpPost("{productId}"), Authorize]
-        public ActionResult<Comment> CreateComment(int productId, Comment comment)
+        public ActionResult<ProductComment> CreateComment(int productId, Comment comment)
         {
             comment.CreatedDate = DateTime.Now;
             var SavedComment = _sqlService.SaveComment(comment);
-            _sqlService.SaveProductComment(new ProductComment
+            ProductComment productCommentAdded= _sqlService.SaveProductComment(new ProductComment
             {
                 CommentId = SavedComment.Id,
                 ProductId = productId,
                 UserId = User.Claims.FirstOrDefault(c => c.Type == "userId").Value
             });
 
-            return Created("Comment", comment);
+            return Created("Comment", productCommentAdded);
         }
 
         [HttpPut("{commentId}"), Authorize]

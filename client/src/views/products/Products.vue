@@ -66,7 +66,7 @@ export default {
   }),
   methods: {
     productUpdated(product) {
-      this.product
+      this.products
         .find(p => p.id === product.Id)
         .map(p => {
           return {

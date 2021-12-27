@@ -45,11 +45,12 @@
       :product="product"
       @update-product="updateProduct"
     />
+    <ProductDetails v-if="product" ref="productDetailsRef" :product="product" />
     <v-card-actions>
       <v-btn v-if="isUserAdmin" color="error" outlined @click="deleteProduct">
         Delete
       </v-btn>
-      <v-btn color="primary" outlined @click="buyProduct"> View </v-btn>
+      <v-btn color="primary" outlined @click="viewProductDetails"> View </v-btn>
       <v-btn color="success" outlined @click="buyProduct"> Buy </v-btn>
     </v-card-actions>
   </v-card>
@@ -59,6 +60,7 @@ import Like from './Like.vue'
 import DeleteConfirmation from './models/DeleteConfirmation.vue'
 import product from '@/assets/js/api/product'
 import EditProduct from './models/EditProduct.vue'
+import ProductDetails from './models/ProductDetails.vue'
 export default {
   name: 'product',
   mixins: [product],
@@ -121,6 +123,9 @@ export default {
         }
       )
       this.$refs.editProductRef.closeModal()
+    },
+    viewProductDetails() {
+      this.$refs.productDetailsRef.openModal()
     }
   },
   mounted() {},
@@ -134,7 +139,7 @@ export default {
         : false
     }
   },
-  components: { Like, DeleteConfirmation, EditProduct }
+  components: { Like, DeleteConfirmation, EditProduct, ProductDetails }
 }
 </script>
 <style lang="scss">
