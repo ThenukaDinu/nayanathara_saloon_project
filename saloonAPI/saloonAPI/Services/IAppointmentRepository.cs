@@ -13,5 +13,6 @@ namespace saloonAPI.Services
         public void UpdateAppoinment(Appoinment appoinment);
         public void DeleteAppoinment(Appoinment appoinment);
         public Appoinment GetAppoinment(int appoinmentId);
+        public void UpdateStatus(Appoinment appoinment, String status);
     }
 }
