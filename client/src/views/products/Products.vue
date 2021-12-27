@@ -3,7 +3,11 @@
     <AddNewProduct ref="addNewProductRef" @save-product="saveProduct" />
     <v-row>
       <v-col>
-        <v-btn class="ml-3 mt-7 white--text" color="#56896c" @click="openModel"
+        <v-btn
+          v-if="isUserAdmin"
+          class="ml-3 mt-7 white--text"
+          color="#56896c"
+          @click="openModel"
           >Add new product</v-btn
         >
       </v-col>
@@ -33,6 +37,7 @@
         :product="product"
         :key="index"
         @product-deleted="productDeleted"
+        @product-updated="productUpdated"
       />
     </div>
     <div v-else class="loadingProgress">
@@ -60,6 +65,19 @@ export default {
     searchProduct: ''
   }),
   methods: {
+    productUpdated(product) {
+      this.products
+        .find(p => p.id === product.Id)
+        .map(p => {
+          return {
+            ...p,
+            name: product.Name,
+            description: product.Description,
+            price: product.Price,
+            quentity: product.Quentity
+          }
+        })
+    },
     productDeleted(productId) {
       this.products = this.products.filter(p => p.id !== productId)
     },
@@ -143,6 +161,16 @@ export default {
           p.isShow = false
         }
       })
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.state.user.user
+    },
+    isUserAdmin() {
+      return this.user && this.user.userRoles
+        ? this.user.userRoles.some(role => role === 'Admin')
+        : false
     }
   },
   async created() {

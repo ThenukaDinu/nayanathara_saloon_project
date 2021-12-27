@@ -1,12 +1,8 @@
 <template>
-  <v-dialog
-    transition="dialog-top-transition"
-    max-width="800"
-    v-model="addNewDialog"
-  >
+  <v-dialog transition="dialog-top-transition" max-width="800" v-model="dialog">
     <template v-slot:default="dialog">
       <v-card>
-        <v-toolbar color="primary" dark>Add Product</v-toolbar>
+        <v-toolbar color="primary" dark>Edit Product</v-toolbar>
         <v-card-text>
           <v-form class="mt-5" ref="form" v-model="valid" lazy-validation>
             <v-text-field
@@ -40,25 +36,15 @@
               hint="Discriber product"
               :counter="100"
             />
-            <v-file-input
-              show-size
-              counter
-              multiple
-              label="Product Images"
-              fileLoading
-              @change="setFiles"
-              prepend-icon="mdi-camera"
-              accept="image/*"
-            ></v-file-input>
 
             <v-btn
               :disabled="!valid"
               color="#56896c"
               class="mr-4 mt-5 white--text"
               @click="validate"
-              :loading="saveLoading"
+              :loading="updateLoading"
             >
-              Save Product
+              Update Product
             </v-btn>
 
             <v-btn
@@ -79,16 +65,12 @@
 </template>
 <script>
 export default {
-  name: 'AddNewProduct',
-  props: {},
   data: () => ({
-    saveLoading: false,
-    fileLoading: false,
-    addNewDialog: false,
+    dialog: false,
+    updateLoading: false,
     quentity: 1,
     price: null,
     valid: true,
-    productImages: [],
     name: '',
     nameRules: [
       v => !!v || 'Name is required',
@@ -97,32 +79,47 @@ export default {
     description: '',
     descriptionRules: [],
     quentityRules: [],
-    priceRules: []
+    priceRules: [],
+    productImages: []
   }),
+  props: {
+    product: {
+      type: Object,
+      required: true,
+      default: () => undefined
+    }
+  },
   methods: {
     handler(arg1, arg2) {
       arg1()
       arg2()
     },
-    openModel() {
-      this.addNewDialog = true
+    openModal() {
+      this.dialog = true
+      this.$nextTick(() => {
+        this.name = this.product.name
+        this.description = this.product.description
+        this.quentity = this.product.quentity
+        this.price = this.product.price
+        this.productImages = this.product.productImages
+      })
     },
-    closeModel() {
+    closeModal() {
       this.resetValidation()
       this.reset()
       this.$nextTick(() => {
-        this.addNewDialog = false
+        this.dialog = false
       })
     },
     startLoading() {
-      this.saveLoading = true
+      this.updateLoading = true
     },
     stopLoading() {
-      this.saveLoading = false
+      this.updateLoading = false
     },
     validate() {
       this.$refs.form.validate()
-      if (this.valid) this.saveProduct()
+      if (this.valid) this.updateProduct()
     },
     reset() {
       this.$refs.form.reset()
@@ -136,7 +133,7 @@ export default {
       this.productImages = files
       this.fileLoading = false
     },
-    saveProduct() {
+    updateProduct() {
       let error = false
       if (!this.price) {
         this.$toast.error('please enter a valid price')
@@ -173,18 +170,17 @@ export default {
       }
       if (error) return
       const product = {
+        Id: this.product.id,
         Name: this.name,
         Quentity: this.quentity,
         Price: this.price,
-        Description: this.description,
-        ProductImages: this.productImages
+        Description: this.description
+        // ProductImages: this.productImages
       }
-      this.$emit('save-product', product)
-    }
-  },
-  computed: {}
+      this.$emit('update-product', product)
+    },
+    mounted() {}
+  }
 }
 </script>
-<style lang="scss">
-@import '@/assets/styles/variables.scss';
-</style>
+<style lang="scss"></style>
