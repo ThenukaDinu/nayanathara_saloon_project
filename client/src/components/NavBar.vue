@@ -8,16 +8,16 @@
       </li>
       <li class="item"><router-link class="item" to="/">Home</router-link></li>
       <li class="item">
-        <router-link class="item" to="/about">About</router-link>
-      </li>
-      <li class="item">
         <router-link class="item" to="/products">Products</router-link>
       </li>
       <li class="item">
-        <a>Plans</a>
+        <router-link class="item" to="/appointments">Appointments</router-link>
       </li>
-      <li class="item"><a href="#">Blog</a></li>
-      <li class="item"><a href="#">Contact</a></li>
+      <li class="item"><a href="#">QR</a></li>
+      <li class="item">
+        <router-link class="item" to="/about">About</router-link>
+      </li>
+      <li v-if="isUserAdmin" class="item"><a href="#">Reports</a></li>
       <li v-if="isUserLoggedIn" class="item button" @click="logout">
         <a href="#">Log Out</a>
       </li>
@@ -47,6 +47,14 @@ export default {
         this.$store.state.user.user !== undefined &&
         this.$store.state.user.user !== null
       )
+    },
+    user() {
+      return this.$store.state.user.user
+    },
+    isUserAdmin() {
+      return this.user && this.user.userRoles
+        ? this.user.userRoles.some(role => role === 'Admin')
+        : false
     }
   },
   methods: {

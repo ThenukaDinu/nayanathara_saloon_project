@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import { signRoutes } from './signRoutes'
 import store from '@/store'
+import { productRoutes } from './productRoutes'
+import { appointmentRoutes } from './appointmentRoutes'
 
 Vue.use(VueRouter)
 
@@ -25,15 +27,8 @@ const routes = [
       isRequiredAuth: false
     }
   },
-  {
-    path: '/products',
-    name: 'Products',
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/products/Products.vue'),
-    meta: {
-      isRequiredAuth: false
-    }
-  }
+  ...productRoutes,
+  ...appointmentRoutes
 ]
 
 const router = new VueRouter({
