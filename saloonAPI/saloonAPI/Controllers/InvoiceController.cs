@@ -27,7 +27,7 @@ namespace saloonAPI.Controllers
         [HttpGet]
         public ActionResult<IList<Invoice>> GetAllinvoices()
         {
-            List<Invoice> invoices = _sqlService.GetAllInvoice();
+            List<Invoice> invoices = _sqlService.GetAllInvoices();
             var vmInvoices = _mapper.Map<List<Invoice>>(invoices);
             return Ok(vmInvoices);
         }
