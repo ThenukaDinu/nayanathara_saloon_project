@@ -9,7 +9,6 @@ namespace saloonAPI.Services
     public class SqlServiceAppointment : IAppointmentRepository
     {
         private readonly ApplicationDbContext _context = new ApplicationDbContext();
-
         public List<Appoinment> GetAllAppointment()
         {
             return _context.Appoinments.ToList();
@@ -34,6 +33,11 @@ namespace saloonAPI.Services
         public void DeleteAppoinment(Appoinment appoinment)
         {
             _context.Appoinments.Remove(appoinment);
+            _context.SaveChanges();
+        }
+        public void UpdateStatus(Appoinment appoinment, int status)
+        {
+            appoinment.Status = (AppoinmentStatus)status;
             _context.SaveChanges();
         }
     }

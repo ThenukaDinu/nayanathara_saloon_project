@@ -13,23 +13,23 @@ namespace saloonAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AppointmentController : ControllerBase
+    public class InvoiceController : ControllerBase
     {
-        private readonly IAppointmentRepository _sqlService;
+        private readonly IInvoiceRepository _sqlService;
         private readonly IMapper _mapper;
 
-        public AppointmentController(IAppointmentRepository dataAccessRepository, IMapper mapper)
+        public InvoiceController(IInvoiceRepository dataAccessRepository, IMapper mapper)
         {
             _sqlService = dataAccessRepository;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<IList<Appoinment>> GetAllAppointments()
+        public ActionResult<IList<Invoice>> GetAllinvoices()
         {
-            List<Appoinment> appoinments = _sqlService.GetAllAppointment();
-            var vmAppoinment = _mapper.Map<List<Appoinment>>(appoinments);
-            return Ok(vmAppoinment);
+            List<Invoice> invoices = _sqlService.GetAllInvoices();
+            var vmInvoices = _mapper.Map<List<Invoice>>(invoices);
+            return Ok(vmInvoices);
         }
         [HttpPost, Authorize]
         public ActionResult<Appoinment> CreateAppointment(Appoinment appoinment)
