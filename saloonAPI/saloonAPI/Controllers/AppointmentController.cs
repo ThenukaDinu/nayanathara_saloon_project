@@ -34,7 +34,9 @@ namespace saloonAPI.Controllers
         [HttpPost, Authorize]
         public ActionResult<Appoinment> CreateAppointment(Appoinment appoinment)
         {
+            var UserId = User.Claims.FirstOrDefault(c => c.Type == "userId").Value;
             appoinment.CreatedDate = DateTime.Now;
+            appoinment.UserId = UserId;
             _sqlService.SaveAppoinment(appoinment);
            
             return Created("Appoinment", appoinment);

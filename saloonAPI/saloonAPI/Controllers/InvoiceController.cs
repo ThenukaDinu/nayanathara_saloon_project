@@ -15,12 +15,14 @@ namespace saloonAPI.Controllers
     [ApiController]
     public class InvoiceController : ControllerBase
     {
-        private readonly IInvoiceRepository _sqlService;
+        private readonly IInvoiceRepository _sqlService; IAppointmentRepository appointmentRepository;
+        private readonly IAppointmentRepository _sqlServiceAppoinment;
         private readonly IMapper _mapper;
 
-        public InvoiceController(IInvoiceRepository dataAccessRepository, IMapper mapper)
+        public InvoiceController(IInvoiceRepository dataAccessRepository,IAppointmentRepository appointmentRepository, IMapper mapper)
         {
             _sqlService = dataAccessRepository;
+            _sqlServiceAppoinment = appointmentRepository;
             _mapper = mapper;
         }
 
@@ -32,68 +34,59 @@ namespace saloonAPI.Controllers
             return Ok(vmInvoices);
         }
         [HttpPost, Authorize]
-        public ActionResult<Appoinment> CreateAppointment(Appoinment appoinment)
+        public ActionResult<Invoice> CreateInvoice(Invoice invoice)
         {
-            appoinment.CreatedDate = DateTime.Now;
-            _sqlService.SaveAppoinment(appoinment);
-           
-            return Created("Appoinment", appoinment);
+
+            var selectedAppoinment = _sqlServiceAppoinment.GetAppoinment(invoice.AppoinmentId);
+
+            if (selectedAppoinment is not null && selectedAppoinment.Status == AppoinmentStatus.Completed)
+            {
+                invoice.CreatedDate = DateTime.Now;
+                var result = _sqlService.SaveInvoice(invoice);
+
+                if (result is not null)
+                {
+                    selectedAppoinment.Status = AppoinmentStatus.Paid;
+                    _sqlServiceAppoinment.UpdateAppoinment(selectedAppoinment);
+
+                    return Created("Invoice", invoice);
+                }
+                return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Something went wrong!" });
+            }
+            return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Cannot Create Invoice for this invoice!" });
+
+
+
+
         }
 
-        [HttpPut("{appointmentId}"), Authorize]
-        public IActionResult UpdateAppointment(int appointmentId, Appoinment appoinment)
+        [HttpPut("{invoiceId}"), Authorize]
+        public IActionResult UpdateInvoice(int invoiceId, Invoice invoice)
         {
-            var appoinmentSelected = _sqlService.GetAppoinment(appointmentId);
+            var invoiceSelected = _sqlService.GetInvoice(invoiceId);
 
-            if (appoinmentSelected is null)
+            if (invoiceSelected is null)
             {
                 return NotFound();
             }
-            else if (appoinmentSelected.Status != AppoinmentStatus.Created)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "This appointment cannot update!" });
-            }
-
-            appoinmentSelected.Type = appoinment.Type;
-            appoinmentSelected.DurationInMins = appoinment.DurationInMins;
-            appoinmentSelected.AppoinmentDate = appoinment.AppoinmentDate;
-            appoinmentSelected.CreatedDate = appoinment.CreatedDate;
-
-            _sqlService.UpdateAppoinment(appoinmentSelected);
+            invoiceSelected.InvoiceNo = invoice.InvoiceNo;
+            invoiceSelected.AppoinmentId = invoice.AppoinmentId;
+       
+            _sqlService.UpdateInvoice(invoiceSelected);
 
             return NoContent();
         }
 
-        [HttpPut("{appointmentId}/status-update"), Authorize]
-        public IActionResult StatusUpdateAppointment(int appointmentId, Appoinment appoinment)
+        [HttpDelete("{invoiceId}"), Authorize]
+        public IActionResult DeleteInvoice(int invoiceId)
         {
-            var appoinmentSelected = _sqlService.GetAppoinment(appointmentId);
-
-            if (appoinmentSelected is null)
-            {
-                return NotFound();
-            }
-            else if (appoinmentSelected.Status == AppoinmentStatus.Completed)
-            {
-                appoinmentSelected.CompletedDate = DateTime.Now;
-            }
-            appoinmentSelected.Status = appoinment.Status;
-
-            _sqlService.UpdateAppoinment(appoinmentSelected);
-
-            return NoContent();
-        }
-
-        [HttpDelete("{appoinmentId}"), Authorize]
-        public IActionResult DeleteAppoinment(int appoinmentId)
-        {
-            var selectedAppoinment = _sqlService.GetAppoinment(appoinmentId);
-            if (selectedAppoinment is null)
+            var selectedInvoice = _sqlService.GetInvoice(invoiceId);
+            if (selectedInvoice is null)
             {
                 return NotFound();
             }
 
-            _sqlService.DeleteAppoinment(selectedAppoinment);
+            _sqlService.DeleteInvoice(selectedInvoice);
 
             return NoContent();
         }

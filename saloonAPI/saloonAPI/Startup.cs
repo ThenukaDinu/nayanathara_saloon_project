@@ -84,6 +84,7 @@ namespace saloonAPI
             services.AddScoped<ICommentRepository, SqlServiceComment>();
             services.AddScoped<ILikeRepository, SqlServiceLike>();
             services.AddScoped<IAppointmentRepository, SqlServiceAppointment>();
+            services.AddScoped<IInvoiceRepository, SqlServiceInvoice>();
             services.AddScoped<ICustomerSettingsRepository, SqlServiceCustomerSettings>();
         }
 
