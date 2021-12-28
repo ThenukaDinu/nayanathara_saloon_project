@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3d67cdf7-15b8-49c8-8b4d-6dc4e8632dda",
+		"_postman_id": "fc0cccb3-96dc-40d7-b55d-bbb511bdcc94",
 		"name": "SaloonAPI",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -455,6 +455,256 @@
 						"api",
 						"Like",
 						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllAppointments",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGhlbnVrYXRlc3QyQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRoZW51a2F0ZXN0MkBnbWFpbC5jb20iLCJqdGkiOiI3YzE2YTdmYi0xZDE5LTQyNDMtYWQ5NS0wNTNkMDJlODI3MTgiLCJ1c2VySWQiOiJkNTY4OWNjMS0xM2I3LTRlZmMtOTdlMC1iMzdiYTBkMmRjMjkiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNjQwNzEyNDgwLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjYxOTU1IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo0MjAwIn0.EWMvqaAxwoBJmyCXgMuFBz1dFn12oE7XuobYfUGG6ys",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44327/api/Appointment",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44327",
+					"path": [
+						"api",
+						"Appointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddAppointment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGhlbnVrYXRlc3QyQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRoZW51a2F0ZXN0MkBnbWFpbC5jb20iLCJqdGkiOiI3YzE2YTdmYi0xZDE5LTQyNDMtYWQ5NS0wNTNkMDJlODI3MTgiLCJ1c2VySWQiOiJkNTY4OWNjMS0xM2I3LTRlZmMtOTdlMC1iMzdiYTBkMmRjMjkiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNjQwNzEyNDgwLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjYxOTU1IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo0MjAwIn0.EWMvqaAxwoBJmyCXgMuFBz1dFn12oE7XuobYfUGG6ys",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Type\": 0,\r\n    \"Status\": 0,\r\n    \"DurationInMins\": 10,\r\n    \"AppoinmentDate\": \"2021-12-10\",\r\n    \"CreatedDate\": \"2021-12-10\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44327/api/Appointment",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44327",
+					"path": [
+						"api",
+						"Appointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateAppointment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGhlbnVrYXRlc3QyQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRoZW51a2F0ZXN0MkBnbWFpbC5jb20iLCJqdGkiOiI3YzE2YTdmYi0xZDE5LTQyNDMtYWQ5NS0wNTNkMDJlODI3MTgiLCJ1c2VySWQiOiJkNTY4OWNjMS0xM2I3LTRlZmMtOTdlMC1iMzdiYTBkMmRjMjkiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNjQwNzEyNDgwLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjYxOTU1IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo0MjAwIn0.EWMvqaAxwoBJmyCXgMuFBz1dFn12oE7XuobYfUGG6ys",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Type\": 0,\r\n    \"Status\": 1,\r\n    \"DurationInMins\": 11,\r\n    \"AppoinmentDate\": \"2021-12-10\",\r\n    \"CreatedDate\": \"2021-12-10\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44327/api/Appointment/:id",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44327",
+					"path": [
+						"api",
+						"Appointment",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteAppointment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGhlbnVrYXRlc3QyQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRoZW51a2F0ZXN0MkBnbWFpbC5jb20iLCJqdGkiOiI3YzE2YTdmYi0xZDE5LTQyNDMtYWQ5NS0wNTNkMDJlODI3MTgiLCJ1c2VySWQiOiJkNTY4OWNjMS0xM2I3LTRlZmMtOTdlMC1iMzdiYTBkMmRjMjkiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNjQwNzEyNDgwLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjYxOTU1IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo0MjAwIn0.EWMvqaAxwoBJmyCXgMuFBz1dFn12oE7XuobYfUGG6ys",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Type\": 0,\r\n    \"Status\": 1,\r\n    \"DurationInMins\": 11,\r\n    \"AppoinmentDate\": \"2021-12-10\",\r\n    \"CreatedDate\": \"2021-12-10\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44327/api/Appointment/:id",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44327",
+					"path": [
+						"api",
+						"Appointment",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateAppointmentStatus",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGhlbnVrYXRlc3QyQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRoZW51a2F0ZXN0MkBnbWFpbC5jb20iLCJqdGkiOiI3YzE2YTdmYi0xZDE5LTQyNDMtYWQ5NS0wNTNkMDJlODI3MTgiLCJ1c2VySWQiOiJkNTY4OWNjMS0xM2I3LTRlZmMtOTdlMC1iMzdiYTBkMmRjMjkiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNjQwNzEyNDgwLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjYxOTU1IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo0MjAwIn0.EWMvqaAxwoBJmyCXgMuFBz1dFn12oE7XuobYfUGG6ys",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Status\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44327/api/Appointment/:id/status-update",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44327",
+					"path": [
+						"api",
+						"Appointment",
+						":id",
+						"status-update"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
 					]
 				}
 			},
