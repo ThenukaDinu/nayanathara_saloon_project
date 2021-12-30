@@ -9,72 +9,51 @@
       <v-toolbar flat>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
-        <v-dialog v-model="dialog" max-width="500px">
-          <!-- <template v-slot:activator="{ on, attrs }">
-            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-              New Item
-            </v-btn>
-          </template> -->
-          <v-card>
-            <v-card-title>
-              <span class="text-h5">{{ formTitle }}</span>
-            </v-card-title>
 
+        <v-dialog v-model="dialogStatus" max-width="500px">
+          <v-card>
+            <v-card-title class="text-h5">Change status</v-card-title>
             <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      v-model="editedItem.name"
-                      label="Dessert name"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      v-model="editedItem.calories"
-                      label="Calories"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      v-model="editedItem.fat"
-                      label="Fat (g)"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      v-model="editedItem.carbs"
-                      label="Carbs (g)"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      v-model="editedItem.protein"
-                      label="Protein (g)"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </v-container>
+              <v-radio-group v-model="statusSelected" column>
+                <v-radio label="Created" color="orange" :value="0"></v-radio>
+                <v-radio
+                  label="Approved"
+                  color="orange darken-3"
+                  :value="1"
+                ></v-radio>
+                <v-radio
+                  :value="2"
+                  label="Rejected"
+                  color="red darken-3"
+                ></v-radio>
+                <v-radio
+                  label="InProgress"
+                  color="indigo darken-3"
+                  :value="3"
+                ></v-radio>
+                <v-radio :value="4" label="Completed" color="#224638"></v-radio>
+                <v-radio
+                  label="OnHold"
+                  color="pink darken-3"
+                  :value="5"
+                ></v-radio>
+                <v-radio
+                  label="Canceled"
+                  color="gray darken-3"
+                  :value="6"
+                ></v-radio>
+                <v-radio label="Refunded" color="#c4af7e" :value="7"></v-radio>
+                <v-radio label="Paid" color="green" :value="8"></v-radio>
+              </v-radio-group>
             </v-card-text>
-
+            <v-divider class="mx-4"></v-divider>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="close"> Cancel </v-btn>
-              <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <v-dialog v-model="dialogDelete" max-width="500px">
-          <v-card>
-            <v-card-title class="text-h5"
-              >Are you sure you want to delete this item?</v-card-title
-            >
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete"
-                >Cancel</v-btn
-              >
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm"
+              <v-btn color="gray" @click="closeDialogStatus">Cancel</v-btn>
+              <v-btn
+                color="#56896c"
+                class="ml-5 white--text"
+                @click="dialogStatusConfirm"
                 >OK</v-btn
               >
               <v-spacer></v-spacer>
@@ -84,8 +63,9 @@
       </v-toolbar>
     </template>
     <template v-slot:item.actions="{ item }">
-      <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-      <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+      <v-btn small @click="changeStatus(item)" color="green" class="white--text"
+        >Change Status</v-btn
+      >
     </template>
     <template v-slot:no-data>
       <v-btn color="primary" @click="initialize"> Reset </v-btn>
@@ -103,8 +83,9 @@ export default {
   name: 'ManageAppointments',
   mixins: [appointments],
   data: () => ({
+    statusSelected: 0,
     dialog: false,
-    dialogDelete: false,
+    dialogStatus: false,
     headers: [
       {
         text: 'Appointment Date',
@@ -122,35 +103,18 @@ export default {
     ],
     appointments: [],
     responseData: [],
-    editedIndex: -1,
-    editedItem: {
-      name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0
-    },
-    defaultItem: {
-      name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0
-    }
+    selectedIndex: -1,
+    selectedItem: {}
   }),
 
-  computed: {
-    formTitle() {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-    }
-  },
+  computed: {},
 
   watch: {
     dialog(val) {
       val || this.close()
     },
     dialogDelete(val) {
-      val || this.closeDelete()
+      val || this.closeDialogStatus()
     }
   },
 
@@ -165,7 +129,6 @@ export default {
       return Object.keys(object).find(key => object[key] === value)
     },
     initialize() {
-      console.log(this.responseData)
       this.appointments = this.responseData.map(a => {
         return {
           ...a,
@@ -186,45 +149,67 @@ export default {
         }
       })
     },
-
-    editItem(item) {
-      this.editedIndex = this.appointments.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialog = true
+    changeStatus(item) {
+      this.selectedIndex = this.appointments.indexOf(item)
+      this.selectedItem = item
+      this.statusSelected = this.selectedItem.status
+      this.dialogStatus = true
     },
 
-    deleteItem(item) {
-      this.editedIndex = this.appointments.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialogDelete = true
-    },
-
-    deleteItemConfirm() {
-      this.appointments.splice(this.editedIndex, 1)
-      this.closeDelete()
+    dialogStatusConfirm() {
+      const appointmentObj = this.appointments.find(
+        a => a.id === this.selectedItem.id
+      )
+      this.appointmentUpdateStatus(
+        {
+          url: `/Appointment/${this.selectedItem.id}/status-update`,
+          method: 'PUT',
+          data: {
+            Status: this.statusSelected
+          }
+        },
+        () => {
+          this.$toast.success(
+            `Appoinment status changed to ${this.getKeyByValue(
+              appointmentStatus,
+              this.statusSelected
+            )} successfully`
+          )
+          appointmentObj.status = this.statusSelected
+          appointmentObj.statusText = this.getKeyByValue(
+            appointmentStatus,
+            this.statusSelected
+          )
+        },
+        error => {
+          console.error(error)
+          this.$toast.error('Status update failed please contact support')
+        }
+      )
+      this.closeDialogStatus()
     },
 
     close() {
-      this.dialog = false
+      this.dialogStatus = false
       this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
+        this.selectedItem = {}
+        this.selectedIndex = -1
       })
     },
 
-    closeDelete() {
-      this.dialogDelete = false
+    closeDialogStatus() {
+      this.dialogStatus = false
       this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
+        this.selectedItem = {}
+        this.selectedIndex = -1
       })
     },
 
     save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.appointments[this.editedIndex], this.editedItem)
+      if (this.selectedIndex > -1) {
+        Object.assign(this.appointments[this.selectedIndex], this.selectedItem)
       } else {
-        this.appointments.push(this.editedItem)
+        this.appointments.push(this.selectedItem)
       }
       this.close()
     },
