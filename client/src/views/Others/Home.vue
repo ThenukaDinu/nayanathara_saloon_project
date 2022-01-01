@@ -1,6 +1,13 @@
 <template>
   <div class="home">
-    <v-carousel height="500">
+    <v-carousel
+      height="500"
+      :cycle="true"
+      :progress="true"
+      :show-arrows-on-hover="true"
+      progress-color="green"
+      interval="4000"
+    >
       <v-carousel-item
         v-for="(item, i) in items"
         :key="i"

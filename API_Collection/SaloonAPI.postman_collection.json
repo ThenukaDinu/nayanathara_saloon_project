@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "fc0cccb3-96dc-40d7-b55d-bbb511bdcc94",
-		"name": "SaloonAPI",
+		"_postman_id": "11e7d7b6-c191-47b4-b430-7f64fd607af8",
+		"name": "SaloonAPI 21.1.1",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -94,7 +94,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"Email\": \"thenukatest2@gmail.com\",\r\n    \"Password\": \"Pa$$w0rd\"\r\n}",
+					"raw": "{\r\n    \"Email\": \"thenukatest3@gmail.com\",\r\n    \"Password\": \"Pa$$w0rd\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -162,45 +162,6 @@
 				},
 				"method": "GET",
 				"header": [],
-				"url": {
-					"raw": "https://localhost:44327/api/Products",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "44327",
-					"path": [
-						"api",
-						"Products"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "AddProduct",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGhlbnVrYXRlc3QzQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRoZW51a2F0ZXN0M0BnbWFpbC5jb20iLCJqdGkiOiIyZjVhMGVmNy04YmI0LTQzYzYtOGRlNS0wOGJmMDgyYTRlN2IiLCJ1c2VySWQiOiI2NGNlNjcwYy1iYjlhLTRjODctYTlkZC0zZGRkMjA3ZmQ2ZjMiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTYzODExMDQzNiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo2MTk1NSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDIwMCJ9.n_spmLYJBH60sHkXhHLTuzFItNsb8NrpyPsc8e2UKkA",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"Name\": \"Product Two\",\r\n    \"Price\": 4000.00,\r\n    \"Quentity\": 20,\r\n    \"Description\": \"This is product Two\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
 					"raw": "https://localhost:44327/api/Products",
 					"protocol": "https",
@@ -711,37 +672,22 @@
 			"response": []
 		},
 		{
-			"name": "AddInvoice",
+			"name": "Get QR code for User",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGhlbnVrYXRlc3QyQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRoZW51a2F0ZXN0MkBnbWFpbC5jb20iLCJqdGkiOiI3YzE2YTdmYi0xZDE5LTQyNDMtYWQ5NS0wNTNkMDJlODI3MTgiLCJ1c2VySWQiOiJkNTY4OWNjMS0xM2I3LTRlZmMtOTdlMC1iMzdiYTBkMmRjMjkiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNjQwNzEyNDgwLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjYxOTU1IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo0MjAwIn0.EWMvqaAxwoBJmyCXgMuFBz1dFn12oE7XuobYfUGG6ys",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGhlbnVrYXRlc3QzQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRoZW51a2F0ZXN0M0BnbWFpbC5jb20iLCJqdGkiOiJmNGMwY2RhYy1iN2UzLTQ5Y2UtYmRkZi0zY2MxM2IzNTcyNGYiLCJ1c2VySWQiOiI2NGNlNjcwYy1iYjlhLTRjODctYTlkZC0zZGRkMjA3ZmQ2ZjMiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTY0MTEyODc1NywiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo2MTk1NSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDIwMCJ9.mpu7YeJRBKLyC2vtElwRlSk7ufAg6TkoTsby9mePbtc",
 							"type": "string"
 						}
 					]
 				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"InvoiceNo\" : \"IN000001\",\r\n    \"Amount\":1000,\r\n    \"AppoinmentId\":3\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
+				"method": "GET",
+				"header": [],
 				"url": {
-					"raw": "https://localhost:44327/api/Invoice",
+					"raw": "https://localhost:44327/api/QR",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -749,7 +695,73 @@
 					"port": "44327",
 					"path": [
 						"api",
-						"Invoice"
+						"QR"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddProduct",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGhlbnVrYXRlc3QzQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRoZW51a2F0ZXN0M0BnbWFpbC5jb20iLCJqdGkiOiJmYmZlODhlMS1iYWM2LTQ4Y2EtOTMwMi1jOTdhZjQ5Yjg3MGQiLCJ1c2VySWQiOiI2NGNlNjcwYy1iYjlhLTRjODctYTlkZC0zZGRkMjA3ZmQ2ZjMiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTY0MDAzODkyMywiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo2MTk1NSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDIwMCJ9.xXtBtaNmH-_qwYUTUr-ldtaoCmO7n1YQXLhXKlPn-3U",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "Name",
+							"value": "Product 4",
+							"type": "text"
+						},
+						{
+							"key": "Price",
+							"value": "4300.00",
+							"type": "text"
+						},
+						{
+							"key": "Quentity",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "Description",
+							"value": "Product 4 Description",
+							"type": "text"
+						},
+						{
+							"key": "ProductImages",
+							"type": "file",
+							"src": "/C:/Users/Thenuka Dinu/Pictures/devImages/photo-1453728013993-6d66e9c9123a.jpeg"
+						},
+						{
+							"key": "ProductImages",
+							"type": "file",
+							"src": [],
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "https://localhost:44327/api/Products",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44327",
+					"path": [
+						"api",
+						"Products"
 					]
 				}
 			},
@@ -761,7 +773,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGhlbnVrYXRlc3QyQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRoZW51a2F0ZXN0MkBnbWFpbC5jb20iLCJqdGkiOiI5ZDk1Y2FlYi1jMGU4LTRkNDQtODIxOS0zZTFkODkzYzdkZjkiLCJ1c2VySWQiOiJkNTY4OWNjMS0xM2I3LTRlZmMtOTdlMC1iMzdiYTBkMmRjMjkiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNjQwODAwNDU5LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjYxOTU1IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo0MjAwIn0.-8Yh5bfeIZnLufKXA4qkib1zeOj44UJL_lHrONbrSCk",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGhlbnVrYXRlc3QyQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRoZW51a2F0ZXN0MkBnbWFpbC5jb20iLCJqdGkiOiI0N2QwNGIyNS0xZGNhLTQwOTQtYTNmNi0yN2Q5MzAwMDA4NzciLCJ1c2VySWQiOiIzZGY5ODA2MS1iYzk1LTQzNzYtODI2MC01MTA2N2Y4YTMwYzciLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNjM4Mzc4OTc0LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjYxOTU1IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo0MjAwIn0.ZjTKTGmc5lV5cds3K7z9yus-xJmdwq8Rdse66wu1tdE",
 				"type": "string"
 			}
 		]
