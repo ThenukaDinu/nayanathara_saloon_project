@@ -1,5 +1,5 @@
 <template>
-  <v-card v-if="appointment" width="400" class="mx-4 appointment pointer">
+  <v-card v-if="appointment" width="385" class="mx-4 appointment pointer">
     <v-img
       height="120px"
       src="https://images.pexels.com/photos/1257894/pexels-photo-1257894.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
@@ -31,7 +31,7 @@
 </template>
 <script>
 import { appointmentStatus } from '@/assets/js/enums/appointmentEnum'
-import objectHelper from '../../assets/js/healpers/objectHelper'
+import objectHelper from '@/assets/js/healpers/objectHelper'
 export default {
   name: 'Appointment',
   mixins: [objectHelper],

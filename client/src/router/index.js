@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import { signRoutes } from './signRoutes'
+import Home from '@/views/Others/Home.vue'
+import { signRoutes } from '@/router/signRoutes'
 import store from '@/store'
-import { productRoutes } from './productRoutes'
-import { appointmentRoutes } from './appointmentRoutes'
+import { productRoutes } from '@/router/productRoutes'
+import { appointmentRoutes } from '@/router/appointmentRoutes'
+import { qrRoutes } from '@/router/qrRoutes'
+import { reportRoutes } from '@/router/reportRoutes'
 
 Vue.use(VueRouter)
 
@@ -22,13 +24,15 @@ const routes = [
     path: '/about',
     name: 'About',
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/About.vue'),
+      import(/* webpackChunkName: "about" */ '@/views/Others/About.vue'),
     meta: {
       isRequiredAuth: false
     }
   },
   ...productRoutes,
-  ...appointmentRoutes
+  ...appointmentRoutes,
+  ...qrRoutes,
+  ...reportRoutes
 ]
 
 const router = new VueRouter({

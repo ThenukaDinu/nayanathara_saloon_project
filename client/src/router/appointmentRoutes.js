@@ -5,6 +5,9 @@ export const appointmentRoutes = [
     component: () =>
       import(
         /*webpackChunkName: "appointments" */ '../views/Appointments/Appointment.vue'
-      )
+      ),
+    meta: {
+      isRequiredAuth: true
+    }
   }
 ]

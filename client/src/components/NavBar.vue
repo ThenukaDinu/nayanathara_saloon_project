@@ -13,11 +13,13 @@
       <li class="item">
         <router-link class="item" to="/appointments">Appointments</router-link>
       </li>
-      <li class="item"><a href="#">QR</a></li>
+      <li class="item"><router-link to="/qrHome">QR</router-link></li>
       <li class="item">
         <router-link class="item" to="/about">About</router-link>
       </li>
-      <li v-if="isUserAdmin" class="item"><a href="#">Reports</a></li>
+      <li v-if="isUserAdmin" class="item">
+        <router-link to="/reports">Reports</router-link>
+      </li>
       <li v-if="isUserLoggedIn" class="item button" @click="logout">
         <a href="#">Log Out</a>
       </li>

@@ -1,5 +1,13 @@
 <template>
+  <div v-if="loading" class="loadingProgress">
+    <v-progress-circular
+      indeterminate
+      size="60"
+      color="#224638"
+    ></v-progress-circular>
+  </div>
   <v-data-table
+    v-else
     :headers="headers"
     :items="appointments"
     sort-by="calories"
@@ -84,6 +92,7 @@ export default {
   name: 'ManageAppointments',
   mixins: [appointments, objectHelper],
   data: () => ({
+    loading: false,
     statusSelected: 0,
     dialog: false,
     dialogStatus: false,
@@ -135,6 +144,7 @@ export default {
           )
         }
       })
+      this.loading = false
     },
     changeStatus(item) {
       this.selectedIndex = this.appointments.indexOf(item)
@@ -193,6 +203,7 @@ export default {
     },
 
     async getAppointments() {
+      this.loading = true
       await this.appointmentsGet(
         {
           url: '/Appointment',
@@ -202,7 +213,10 @@ export default {
           this.responseData = response.data
           this.initialize()
         },
-        error => console.error(error)
+        error => {
+          this.loading = false
+          console.error(error)
+        }
       )
     }
   }
