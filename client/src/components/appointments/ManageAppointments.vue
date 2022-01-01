@@ -79,9 +79,10 @@ import {
   appointmentStatus
 } from '@/assets/js/enums/appointmentEnum'
 import moment from 'moment'
+import objectHelper from '../../assets/js/healpers/objectHelper'
 export default {
   name: 'ManageAppointments',
-  mixins: [appointments],
+  mixins: [appointments, objectHelper],
   data: () => ({
     statusSelected: 0,
     dialog: false,
@@ -106,18 +107,7 @@ export default {
     selectedIndex: -1,
     selectedItem: {}
   }),
-
   computed: {},
-
-  watch: {
-    dialog(val) {
-      val || this.close()
-    },
-    dialogDelete(val) {
-      val || this.closeDialogStatus()
-    }
-  },
-
   async created() {
     await this.getAppointments()
   },
@@ -125,9 +115,6 @@ export default {
     //
   },
   methods: {
-    getKeyByValue(object, value) {
-      return Object.keys(object).find(key => object[key] === value)
-    },
     initialize() {
       this.appointments = this.responseData.map(a => {
         return {
@@ -204,17 +191,6 @@ export default {
         this.selectedIndex = -1
       })
     },
-
-    save() {
-      if (this.selectedIndex > -1) {
-        Object.assign(this.appointments[this.selectedIndex], this.selectedItem)
-      } else {
-        this.appointments.push(this.selectedItem)
-      }
-      this.close()
-    },
-
-    ////////////////////////////////////////////////////////////
 
     async getAppointments() {
       await this.appointmentsGet(
