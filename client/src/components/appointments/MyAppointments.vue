@@ -1,7 +1,15 @@
 <template>
   <v-row justify="start" class="mb-10">
+    <div v-if="loading" class="loadingProgress">
+      <v-progress-circular
+        indeterminate
+        size="60"
+        color="#224638"
+      ></v-progress-circular>
+    </div>
     <div
-      class="appointment-wrapper"
+      v-else
+      class="appointment-wrapper mt-8"
       v-for="appointment in myAppointments"
       :key="appointment.id"
     >
@@ -22,10 +30,12 @@ export default {
   name: 'MyAppointments',
   mixins: [appointments, objectHelper],
   data: () => ({
-    appointments: []
+    appointments: [],
+    loading: false
   }),
   methods: {
     async getAppointments() {
+      this.loading = true
       await this.appointmentsGet(
         {
           url: '/Appointment',
@@ -50,9 +60,12 @@ export default {
               statusText: this.getKeyByValue(appointmentStatus, a.status)
             }
           })
-          console.log(this.appointments)
+          this.loading = false
         },
-        error => console.error(error)
+        error => {
+          this.loading = true
+          console.error(error)
+        }
       )
     }
   },

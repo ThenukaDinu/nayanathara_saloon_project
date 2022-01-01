@@ -2,7 +2,8 @@ export const signRoutes = [
   {
     path: '/SignIn',
     name: 'Sign In',
-    component: () => import(/* webpackChunkName: "signIn" */ '@/views/SignIn'),
+    component: () =>
+      import(/* webpackChunkName: "signIn" */ '@/views/Authentications/SignIn'),
     meta: {
       isRequiredAuth: false
     }
@@ -10,7 +11,8 @@ export const signRoutes = [
   {
     path: '/SignUp',
     name: 'Sign Up',
-    component: () => import(/* webpackChunkName: "signUp" */ '@/views/SignUp'),
+    component: () =>
+      import(/* webpackChunkName: "signUp" */ '@/views/Authentications/SignUp'),
     meta: {
       isRequiredAuth: false
     }

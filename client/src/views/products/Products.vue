@@ -181,13 +181,6 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/styles/variables.scss';
-v .loadingProgress {
-  display: flex;
-  width: 100%;
-  min-height: 80vh;
-  justify-content: center;
-  align-items: center;
-}
 .product-wrapper {
   display: flex;
   flex-wrap: wrap;
