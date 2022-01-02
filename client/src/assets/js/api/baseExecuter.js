@@ -34,6 +34,15 @@ export default {
         const response = await axios(apiObject)
         successCallback(response)
       } catch (error) {
+        if (
+          error &&
+          error.response &&
+          error.response.status &&
+          error.response.status === 401
+        ) {
+          this.$store.dispatch('logoutUser')
+          this.$router.push('/signIn')
+        }
         errorCallback(error)
       }
     }
