@@ -766,6 +766,166 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "[Report]AppointmentByType",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGhlbnVrYXRlc3Q1QGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRoZW51a2F0ZXN0NUBnbWFpbC5jb20iLCJqdGkiOiJmZTQ2MjI2MC1lYzliLTQ4NTAtOTNlMS1iMDI0YmEzOWRiYjkiLCJ1c2VySWQiOiIzYzI0YTg2Ny0zZWJmLTQxZjQtOGZhMC1iMDAxZTA0YjQ1ZmIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTY0MTMxODYzMCwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo2MTk1NSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDIwMCJ9.wO3SrdwpNzq4aBkwnCH3T7LxbphQ4W5p1VXuxHRbhC0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"StartDate\": \"2021-12-01\",\r\n    \"EndDate\": \"2022-01-31\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44327/api/Report/appointsByType",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44327",
+					"path": [
+						"api",
+						"Report",
+						"appointsByType"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Report]AppointmentAmountsByYear",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGhlbnVrYXRlc3Q1QGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRoZW51a2F0ZXN0NUBnbWFpbC5jb20iLCJqdGkiOiJmZTQ2MjI2MC1lYzliLTQ4NTAtOTNlMS1iMDI0YmEzOWRiYjkiLCJ1c2VySWQiOiIzYzI0YTg2Ny0zZWJmLTQxZjQtOGZhMC1iMDAxZTA0YjQ1ZmIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTY0MTMxODYzMCwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo2MTk1NSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDIwMCJ9.wO3SrdwpNzq4aBkwnCH3T7LxbphQ4W5p1VXuxHRbhC0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Year\": 2022\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44327/api/Report/appointmentAmountsByYear",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44327",
+					"path": [
+						"api",
+						"Report",
+						"appointmentAmountsByYear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Report]CustomersAppointmentCounts",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGhlbnVrYXRlc3Q1QGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRoZW51a2F0ZXN0NUBnbWFpbC5jb20iLCJqdGkiOiJmZTQ2MjI2MC1lYzliLTQ4NTAtOTNlMS1iMDI0YmEzOWRiYjkiLCJ1c2VySWQiOiIzYzI0YTg2Ny0zZWJmLTQxZjQtOGZhMC1iMDAxZTA0YjQ1ZmIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTY0MTMxODYzMCwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo2MTk1NSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDIwMCJ9.wO3SrdwpNzq4aBkwnCH3T7LxbphQ4W5p1VXuxHRbhC0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Year\": 2022\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44327/api/Report/customersAppointmentCounts",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44327",
+					"path": [
+						"api",
+						"Report",
+						"customersAppointmentCounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Report]HowManyUsersPerMonth",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGhlbnVrYXRlc3Q1QGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRoZW51a2F0ZXN0NUBnbWFpbC5jb20iLCJqdGkiOiJmZTQ2MjI2MC1lYzliLTQ4NTAtOTNlMS1iMDI0YmEzOWRiYjkiLCJ1c2VySWQiOiIzYzI0YTg2Ny0zZWJmLTQxZjQtOGZhMC1iMDAxZTA0YjQ1ZmIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTY0MTMxODYzMCwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo2MTk1NSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDIwMCJ9.wO3SrdwpNzq4aBkwnCH3T7LxbphQ4W5p1VXuxHRbhC0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Year\": 2021\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44327/api/Report/howManyUsersPerMonth",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44327",
+					"path": [
+						"api",
+						"Report",
+						"howManyUsersPerMonth"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {
