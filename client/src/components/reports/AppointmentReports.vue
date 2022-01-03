@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="ml-5 appointment-by-type">
+    <div class="mx-4 appointment-by-type">
       <h1 class="mb-10">Appointments by type</h1>
       <v-row class="ml-1">
         <v-menu
@@ -39,10 +39,30 @@
         </v-menu>
       </v-row>
       <v-data-table
-        :headers="headers"
+        :headers="appointmentsByTypeHeaders"
         :items="appointmentsByTypeData"
         :items-per-page="10"
         class="elevation-1 mt-6"
+        :loading="appointmentsByTypeLoading"
+      ></v-data-table>
+    </div>
+    <div class="mx-4 mt-10 appointment-amounts">
+      <h1 class="mb-10">Appointments Amounts</h1>
+      <v-row class="ml-1">
+        <v-select
+          v-model="selectedYear"
+          :items="years"
+          label="Select a year"
+          outlined
+          @change="getAppointmentAmountsByYear"
+        ></v-select>
+      </v-row>
+      <v-data-table
+        :headers="appointmentAmountsHeaders"
+        :items="appointmentAmountsData"
+        :items-per-page="10"
+        class="elevation-1 mt-6"
+        :loading="appointmentAmountsLoading"
       ></v-data-table>
     </div>
   </div>
@@ -54,9 +74,13 @@ export default {
   name: 'AppointmentReports',
   mixins: [reports],
   data: () => ({
+    appointmentsByTypeLoading: false,
+    appointmentAmountsLoading: false,
     dates: [],
+    years: [],
+    selectedYear: new Date().getFullYear(),
     menu: false,
-    headers: [
+    appointmentsByTypeHeaders: [
       {
         text: 'Appointment Type',
         align: 'start',
@@ -65,7 +89,18 @@ export default {
       },
       { text: 'Count', value: 'count', sortable: true }
     ],
-    appointmentsByTypeData: []
+    appointmentAmountsHeaders: [
+      {
+        text: 'Month',
+        align: 'start',
+        sortable: true,
+        value: 'monthText'
+      },
+      { text: 'Count', value: 'count', sortable: true },
+      { text: 'Amount', value: 'amount', sortable: true }
+    ],
+    appointmentsByTypeData: [],
+    appointmentAmountsData: []
   }),
   methods: {
     changeDateRange(dates, type) {
@@ -75,9 +110,10 @@ export default {
       }
     },
     async getAppointsByType() {
+      this.appointmentsByTypeLoading = true
       this.appointsByType(
         {
-          url: '/Report',
+          url: '/Report/appointsByType',
           method: 'POST',
           data: {
             StartDate: this.dates[0],
@@ -86,11 +122,43 @@ export default {
         },
         response => {
           this.appointmentsByTypeData = response.data
+          this.appointmentsByTypeLoading = false
         },
         error => {
+          this.appointmentsByTypeLoading = false
           console.error(error)
         }
       )
+    },
+    getAppointmentAmountsByYear() {
+      this.appointmentAmountsLoading = true
+      this.appointmentAmountsByYear(
+        {
+          url: '/Report/appointmentAmountsByYear',
+          method: 'POST',
+          data: {
+            Year: this.selectedYear
+          }
+        },
+        response => {
+          this.appointmentAmountsData = response.data
+          this.appointmentAmountsLoading = false
+        },
+        error => {
+          this.appointmentAmountsLoading = false
+          console.error(error)
+        }
+      )
+    },
+    generateArrayOfYears(howMany) {
+      var max = new Date().getFullYear()
+      var min = max - howMany
+      var years = []
+
+      for (var i = max; i >= min; i--) {
+        years.push(i)
+      }
+      return years
     }
   },
   created() {
@@ -98,7 +166,9 @@ export default {
       moment().add(-1, 'M').format('YYYY-MM-DD'),
       moment().format('YYYY-MM-DD')
     )
+    this.years = this.generateArrayOfYears(20)
     this.getAppointsByType()
+    this.getAppointmentAmountsByYear()
   }
 }
 </script>

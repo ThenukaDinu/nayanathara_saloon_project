@@ -8,6 +8,7 @@ namespace saloonAPI.Models.Authentication
 {
     public class ApplicationUser : IdentityUser
     {
+        public DateTime JoinDate { get; set; }
         public virtual ICollection<CustomerTelNumber> TelNumbers { get; set; } = new List<CustomerTelNumber>();
         public virtual ICollection<Appoinment> Appoinments { get; set; } = new List<Appoinment>();
         public virtual ICollection<Like> Likes { get; set; } = new List<Like>();

@@ -46,7 +46,8 @@ namespace saloonAPI.Controllers
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.Email
+                UserName = model.Email,
+                JoinDate = DateTime.Now
             };
             var result = await userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
@@ -103,7 +104,8 @@ namespace saloonAPI.Controllers
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.Email
+                UserName = model.Email,
+                JoinDate = DateTime.Now
             };
             var result = await userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
