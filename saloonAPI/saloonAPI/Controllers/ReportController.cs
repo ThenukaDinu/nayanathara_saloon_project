@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using saloonAPI.Models;
+using saloonAPI.Models.Authentication;
 using saloonAPI.Services;
 using saloonAPI.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,10 +23,10 @@ namespace saloonAPI.Controllers
             _sqlService = dataAccessService;
         }
 
-        [HttpPost, Authorize]
-        public IActionResult AppointmentsByType(ReportsInput postData)
+        [HttpPost("appointsByType"), Authorize]
+        public IActionResult AppointmentsByType(ReportsInputDates postData)
         {
-            List<Appoinment> appoinments = _sqlService.GetAppointments(postData.StartDate, postData.EndDate);
+            List<Appoinment> appoinments = _sqlService.GetAppointmentsByYearRange(postData.StartDate, postData.EndDate);
             List<AppointmentByTypeVM> results = appoinments
                 .GroupBy(a => a.Type)
                 .Select(i => new AppointmentByTypeVM
@@ -33,6 +35,61 @@ namespace saloonAPI.Controllers
                     TypeText = i.First().Type.ToString(),
                     Count = i.Count()
                 }).ToList();
+            return Ok(results);
+        }
+
+        [HttpPost("appointmentAmountsByYear"), Authorize]
+        public IActionResult AppointmentAmountsByYear(ReportsInputYear postData)
+        {
+            List<Appoinment> appoinments = _sqlService.GetAppointmentsByYear(postData.Year);
+            List<AppointmentAmountsByYearVM> results = appoinments
+                .GroupBy(a => a.CreatedDate.Month)
+                .Select(i => new AppointmentAmountsByYearVM
+                {
+                   Count = i.Count(),
+                   Month = i.First().CreatedDate.Month,
+                   MonthText = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i.First().CreatedDate.Month),
+                   Amount = i.Sum(c =>
+                   {
+                       Invoice invoiceForAppointment = _sqlService.GetInvoiceForAppointment(c.Id);
+                       if (invoiceForAppointment is null) return 0;
+                       return invoiceForAppointment.Amount;
+                   })
+                }).ToList();
+
+            return Ok(results);
+        }
+
+        [HttpPost("customersAppointmentCounts"), Authorize]
+        public IActionResult CustomersAppointmentCounts(ReportsInputYear postData)
+        {
+            List<Appoinment> appoinments = _sqlService.GetAppointmentsByYear(postData.Year);
+            List<UserAppointmentCountsVM> results = appoinments
+                .GroupBy(a => a.User.Email)
+                .Select(i => new UserAppointmentCountsVM
+                {
+                    AppointmentCount = i.Count(),
+                    Email = i.First().User.Email,
+                    JoinDate = i.First().User.JoinDate,
+                    JoinDateFormatted = i.First().User.JoinDate.ToString("yyyy-MM-dd")
+                }).ToList();
+
+            return Ok(results);
+        }
+
+        [HttpPost("howManyUsersPerMonth"), Authorize]
+        public IActionResult HowManyUsersPerMonth(ReportsInputYear postData)
+        {
+            List<ApplicationUser> users = _sqlService.GetUsersByYear(postData.Year);
+            List<HowManyUsersPerMonth> results = users
+                .GroupBy(a => a.JoinDate.Month)
+                .Select(i => new HowManyUsersPerMonth
+                {
+                   UsersCount = i.Count(),
+                   Month = i.First().JoinDate.Month,
+                   MonthText = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i.First().JoinDate.Month)
+                }).ToList();
+
             return Ok(results);
         }
     }
