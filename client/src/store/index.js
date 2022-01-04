@@ -3,6 +3,7 @@ import user from './modules/user'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 import * as Cookies from 'js-cookie'
+import cart from './modules/cart'
 
 Vue.use(Vuex)
 
@@ -17,11 +18,12 @@ export default new Vuex.Store({
   },
   actions: {},
   modules: {
-    user: user
+    user: user,
+    cart: cart
   },
   plugins: [
     createPersistedState({
-      paths: ['user'],
+      paths: ['user', 'cart'],
       storage: {
         getItem: key => Cookies.get(key),
         setItem: (key, value) => {

@@ -63,22 +63,22 @@ export default {
     dialog: false,
     items: [
       {
-        src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg'
-      },
-      {
-        src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg'
-      },
-      {
-        src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg'
-      },
-      {
-        src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg'
+        src: 'https://images.pexels.com/photos/234220/pexels-photo-234220.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
       }
     ]
   }),
   methods: {
     openModal() {
       this.dialog = true
+      this.$nextTick(() => {
+        if (this.product && this.product.productImages.length > 0) {
+          this.items = this.product.productImages.map(i => {
+            return {
+              src: require(`../../../../../saloonAPI/saloonAPI/Images/${i.uniqueName}`)
+            }
+          })
+        }
+      })
     },
     closeModal() {
       this.dialog = false

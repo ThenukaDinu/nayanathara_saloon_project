@@ -47,7 +47,7 @@
       ></v-data-table>
     </div>
     <div class="mx-4 mt-10 appointment-amounts">
-      <h1 class="mb-10">Appointments Amounts</h1>
+      <h1 class="mb-10">Appointments Finanace</h1>
       <v-row class="ml-1">
         <v-select
           v-model="selectedYear"

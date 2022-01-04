@@ -23,6 +23,18 @@
       <li v-if="isUserLoggedIn" class="item button" @click="logout">
         <a href="#">Log Out</a>
       </li>
+      <li class="cart-icon">
+        <router-link to="/cart">
+          <v-badge
+            :content="cartCount"
+            :value="cartCount"
+            color="green"
+            overlap
+          >
+            <v-icon large color="#f0f0f0"> mdi-cart </v-icon>
+          </v-badge>
+        </router-link>
+      </li>
       <li class="toggle">
         <a href="#"><i class="fas fa-bars"></i></a>
       </li>
@@ -32,9 +44,7 @@
 <script>
 export default {
   data() {
-    return {
-      //
-    }
+    return {}
   },
   props: {
     name: {
@@ -57,6 +67,9 @@ export default {
       return this.user && this.user.userRoles
         ? this.user.userRoles.some(role => role === 'Admin')
         : false
+    },
+    cartCount() {
+      return this.$store.getters.getCartCount
     }
   },
   methods: {
@@ -299,6 +312,10 @@ a {
   }
   .submenu-active {
     border-radius: 0;
+  }
+  .cart-icon {
+    margin: 5px 5px 0 5px;
+    order: 999;
   }
 }
 </style>
