@@ -1,6 +1,6 @@
 <template>
   <v-card
-    @click="updateAppointment"
+    @click="editAppointment"
     v-if="appointment"
     width="385"
     class="mx-4 appointment pointer"
@@ -43,12 +43,12 @@
 <script>
 import { appointmentStatus } from '@/assets/js/enums/appointmentEnum'
 import EditAppointment from './models/EditAppointment.vue'
-import appointment from '@/assets/js/api/appointment'
+import appointments from '@/assets/js/api/appointments'
 
 import objectHelper from '@/assets/js/healpers/objectHelper'
 export default {
   name: 'Appointment',
-  mixins: [objectHelper, appointment],
+  mixins: [objectHelper, appointments],
   props: {
     appointment: { type: Object, required: true, default: () => undefined }
   },
@@ -56,6 +56,9 @@ export default {
     appointmentStatusList: []
   }),
   methods: {
+    editAppointment() {
+      this.$refs.editAppointmentRef.openModal()
+    },
     createAppointmentStatusList() {
       for (const [key, value] of Object.entries(appointmentStatus)) {
         this.appointmentStatusList.push({ key, value })
@@ -65,22 +68,23 @@ export default {
       return status.value === this.appointment.status ? 'green' : '#DAA520'
     },
     updateAppointment(appointment) {
-      this.updateProductRequest(
+      console.log(appointment)
+      this.updateAppointmentRequest(
         {
-          url: `/Products/${product.Id}`,
+          url: `/Appointment/${appointment.Id}`,
           method: 'PUT',
-          data: product
+          data: appointment
         },
         () => {
           this.loading = false
-          this.$emit('product-updated', product)
+          this.$emit('appointment-updated', appointment)
         },
         error => {
           console.error(error)
-          this.$toast.error('product update failed please contact support')
+          this.$toast.error('appointment update failed please contact support')
         }
       )
-      this.$refs.editProductRef.closeModal()
+      this.$refs.editAppointmentRef.closeModal()
     }
   },
   computed: {},

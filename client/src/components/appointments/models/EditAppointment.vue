@@ -75,16 +75,25 @@ export default {
     quentity: 1,
     price: null,
     valid: true,
-    name: '',
-    nameRules: [
-      v => !!v || 'Name is required',
-      v => (v && v.length <= 100) || 'Name must be less than 100 characters'
+    DurationInMins: '',
+    type: '',
+    DurationRules: [
+      v => !!v || 'Duration time is required',
+      v => (v && v.length <= 1) || 'Duration must be less than 2 hours'
     ],
-    description: '',
-    descriptionRules: [],
-    quentityRules: [],
-    priceRules: [],
-    productImages: []
+    items: [
+      'HairCut',
+      'ColouringAndStyling',
+      'NailTreatment',
+      'FacialAndSkinCareTreatment',
+      'WaxingAndHairRemoval',
+      'Makeup',
+      'Others'
+    ],
+    date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+      .toISOString()
+      .substr(0, 10),
+    menu2: false
   }),
   props: {
     appointment: {
@@ -101,11 +110,14 @@ export default {
     openModal() {
       this.dialog = true
       this.$nextTick(() => {
-        this.name = this.product.name
-        this.description = this.product.description
-        this.quentity = this.product.quentity
-        this.price = this.product.price
-        this.productImages = this.product.productImages
+        this.type = this.appointment.typeText
+        this.DurationInMins = this.appointment.durationInMins
+        this.date = new Date(
+          Date.now(this.appointment.AppoinmentDate) -
+            new Date().getTimezoneOffset() * 60000
+        )
+          .toISOString()
+          .substr(0, 10)
       })
     },
     closeModal() {
@@ -123,7 +135,7 @@ export default {
     },
     validate() {
       this.$refs.form.validate()
-      if (this.valid) this.updateProduct()
+      if (this.valid) this.updateAppointment()
     },
     reset() {
       this.$refs.form.reset()
@@ -132,11 +144,7 @@ export default {
     resetValidation() {
       this.$refs.form.resetValidation()
     },
-    setFiles(files) {
-      this.fileLoading = true
-      this.productImages = files
-      this.fileLoading = false
-    },
+
     updateAppointment() {
       let error = false
 
@@ -148,7 +156,6 @@ export default {
         this.$toast.error('please enter a valid date')
         error = true
       }
-      console.log(this.type)
       if (!this.type) {
         this.$toast.error('please select a valid type')
         error = true
@@ -157,13 +164,13 @@ export default {
         this.$toast.error('duration should be number')
         error = true
       }
+
       if (error) return
       const appointment = {
         Type: this.type,
         DurationInMins: this.DurationInMins,
         AppoinmentDate: this.date
       }
-
       this.$emit('update-appointment', appointment)
     },
     mounted() {}

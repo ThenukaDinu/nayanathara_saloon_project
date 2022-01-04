@@ -14,8 +14,8 @@
       :key="appointment.id"
     >
       <Appointment
-        @get-appointment="appointmentSelected"
         :appointment="appointment"
+        @appointment-update="appointmentUpdated"
       />
     </div>
   </v-row>
@@ -70,10 +70,19 @@ export default {
           console.error(error)
         }
       )
-    },
-    appointmentSelected(id) {
-      return console.log(id)
     }
+  },
+  appointmentUpdated(appointment) {
+    this.appointments
+      .find(a => a.id === appointment.Id)
+      .map(a => {
+        return {
+          ...a,
+          Type: appointment.type,
+          DurationInMins: appointment.DurationInMins,
+          AppoinmentDate: appointment.date
+        }
+      })
   },
   computed: {
     user() {
