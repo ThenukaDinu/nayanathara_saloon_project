@@ -13,5 +13,7 @@ namespace saloonAPI.Services
         public List<Appoinment> GetAppointmentsByYear(int Year);
         public Invoice GetInvoiceForAppointment(int appointmentId);
         public List<ApplicationUser> GetUsersByYear(int year);
+        public List<OrderDetail> GetOrderDetailsByYear(int year);
+        public List<OrderInvoice> GetOrderInvoicesByOrder(int orderId);
     }
 }
