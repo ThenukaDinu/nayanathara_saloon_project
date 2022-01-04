@@ -30,5 +30,15 @@ namespace saloonAPI.Services
         {
             return _context.Users.Where(u => u.JoinDate.Year == year).ToList();
         }
+
+        public List<OrderDetail> GetOrderDetailsByYear(int year)
+        {
+            return _context.OrderDetails.Where(u => u.CreatedDate.Year == year).ToList();
+        }
+
+        public List<OrderInvoice> GetOrderInvoicesByOrder(int orderId)
+        {
+            return _context.OrderInvoices.Where(i => i.OrderId == orderId).ToList();
+        }
     }
 }

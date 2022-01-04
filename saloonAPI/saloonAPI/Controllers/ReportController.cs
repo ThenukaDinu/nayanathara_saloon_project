@@ -92,5 +92,27 @@ namespace saloonAPI.Controllers
 
             return Ok(results);
         }
+
+        [HttpPost("howManyProductSoldByMonth"), Authorize]
+        public IActionResult HowManyProductSoldByMonth(ReportsInputYear postData)
+        {
+            List<OrderDetail> orderDetails = _sqlService.GetOrderDetailsByYear(postData.Year);
+            List<HowManyProductsSoldByMonthVM> results = orderDetails
+                .GroupBy(a => a.CreatedDate.Month)
+                .Select(i => new HowManyProductsSoldByMonthVM
+                {
+                    ProductsSoldCount = i.Count(),
+                    Month = i.First().CreatedDate.Month,
+                    MonthText = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i.First().CreatedDate.Month),
+                    ProductsSoldAmount = i.Sum(s =>
+                    {
+                        List<OrderInvoice> orderInvoices = _sqlService.GetOrderInvoicesByOrder(s.OrderId);
+                        if (orderInvoices is null || orderInvoices.Count() < 1) return 0;
+                        return orderInvoices.Sum(oi => oi.Invoice.Amount);
+                    })
+                }).ToList();
+
+            return Ok(results);
+        }
     }
 }
