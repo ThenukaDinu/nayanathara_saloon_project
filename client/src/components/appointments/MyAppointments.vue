@@ -70,20 +70,21 @@ export default {
           console.error(error)
         }
       )
+    },
+    appointmentUpdated(appointment) {
+      this.appointments
+        .find(a => a.id === appointment.Id)
+        .map(a => {
+          return {
+            ...a,
+            Type: appointment.type,
+            DurationInMins: appointment.DurationInMins,
+            AppoinmentDate: appointment.date
+          }
+        })
     }
   },
-  appointmentUpdated(appointment) {
-    this.appointments
-      .find(a => a.id === appointment.Id)
-      .map(a => {
-        return {
-          ...a,
-          Type: appointment.type,
-          DurationInMins: appointment.DurationInMins,
-          AppoinmentDate: appointment.date
-        }
-      })
-  },
+
   computed: {
     user() {
       return this.$store.state.user.user

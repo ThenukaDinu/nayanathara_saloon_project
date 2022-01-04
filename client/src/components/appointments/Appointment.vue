@@ -68,7 +68,6 @@ export default {
       return status.value === this.appointment.status ? 'green' : '#DAA520'
     },
     updateAppointment(appointment) {
-      console.log(appointment)
       this.updateAppointmentRequest(
         {
           url: `/Appointment/${appointment.Id}`,
