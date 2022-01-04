@@ -48,7 +48,7 @@
         Delete
       </v-btn>
       <v-btn color="primary" outlined @click="viewProductDetails"> View </v-btn>
-      <v-btn color="success" outlined @click="buyProduct"> Buy </v-btn>
+      <v-btn color="success" outlined @click="buyProduct"> To Cart </v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -81,7 +81,7 @@ export default {
       return require(`../../../../saloonAPI/saloonAPI/Images/${images[0].uniqueName}`)
     },
     buyProduct() {
-      console.log('buy clicked')
+      this.$store.dispatch('addToCart', this.product)
     },
     editProduct() {
       this.$refs.editProductRef.openModal()
