@@ -13,7 +13,10 @@
       v-for="appointment in myAppointments"
       :key="appointment.id"
     >
-      <Appointment :appointment="appointment" />
+      <Appointment
+        :appointment="appointment"
+        @appointment-update="appointmentUpdated"
+      />
     </div>
   </v-row>
 </template>
@@ -68,6 +71,18 @@ export default {
         }
       )
     }
+  },
+  appointmentUpdated(appointment) {
+    this.appointments
+      .find(a => a.id === appointment.Id)
+      .map(a => {
+        return {
+          ...a,
+          Type: appointment.type,
+          DurationInMins: appointment.DurationInMins,
+          AppoinmentDate: appointment.date
+        }
+      })
   },
   computed: {
     user() {

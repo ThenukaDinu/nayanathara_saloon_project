@@ -1,5 +1,16 @@
 <template>
-  <v-card v-if="appointment" width="385" class="mx-4 appointment pointer">
+  <v-card
+    @click="editAppointment"
+    v-if="appointment"
+    width="385"
+    class="mx-4 appointment pointer"
+  >
+    <EditAppointment
+      ref="editAppointmentRef"
+      v-if="appointment"
+      :appointment="appointment"
+      @update-appointment="updateAppointment"
+    />
     <v-img
       height="120px"
       src="https://images.pexels.com/photos/1257894/pexels-photo-1257894.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
@@ -31,10 +42,13 @@
 </template>
 <script>
 import { appointmentStatus } from '@/assets/js/enums/appointmentEnum'
+import EditAppointment from './models/EditAppointment.vue'
+import appointments from '@/assets/js/api/appointments'
+
 import objectHelper from '@/assets/js/healpers/objectHelper'
 export default {
   name: 'Appointment',
-  mixins: [objectHelper],
+  mixins: [objectHelper, appointments],
   props: {
     appointment: { type: Object, required: true, default: () => undefined }
   },
@@ -42,6 +56,9 @@ export default {
     appointmentStatusList: []
   }),
   methods: {
+    editAppointment() {
+      this.$refs.editAppointmentRef.openModal()
+    },
     createAppointmentStatusList() {
       for (const [key, value] of Object.entries(appointmentStatus)) {
         this.appointmentStatusList.push({ key, value })
@@ -49,12 +66,32 @@ export default {
     },
     setColor(status) {
       return status.value === this.appointment.status ? 'green' : '#DAA520'
+    },
+    updateAppointment(appointment) {
+      console.log(appointment)
+      this.updateAppointmentRequest(
+        {
+          url: `/Appointment/${appointment.Id}`,
+          method: 'PUT',
+          data: appointment
+        },
+        () => {
+          this.loading = false
+          this.$emit('appointment-updated', appointment)
+        },
+        error => {
+          console.error(error)
+          this.$toast.error('appointment update failed please contact support')
+        }
+      )
+      this.$refs.editAppointmentRef.closeModal()
     }
   },
   computed: {},
   created() {
     this.createAppointmentStatusList()
-  }
+  },
+  components: { EditAppointment }
 }
 </script>
 <style lang="scss" scoped>

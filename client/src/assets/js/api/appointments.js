@@ -35,6 +35,17 @@ export default {
         response => successCallback(response),
         error => errorCallback(error)
       )
+    },
+    async updateAppointmentRequest(data, successCallback, errorCallback) {
+      await this.callSaloonApi(
+        {
+          url: data.url,
+          data: data.data,
+          method: data.method
+        },
+        response => successCallback(response),
+        error => errorCallback(error)
+      )
     }
   }
 }
