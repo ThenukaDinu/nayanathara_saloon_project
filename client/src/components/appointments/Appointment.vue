@@ -1,5 +1,16 @@
 <template>
-  <v-card v-if="appointment" width="385" class="mx-4 appointment pointer">
+  <v-card
+    @click="updateAppointment"
+    v-if="appointment"
+    width="385"
+    class="mx-4 appointment pointer"
+  >
+    <EditAppointment
+      ref="editAppointmentRef"
+      v-if="appointment"
+      :appointment="appointment"
+      @update-appointment="updateAppointment"
+    />
     <v-img
       height="120px"
       src="https://images.pexels.com/photos/1257894/pexels-photo-1257894.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
@@ -31,10 +42,13 @@
 </template>
 <script>
 import { appointmentStatus } from '@/assets/js/enums/appointmentEnum'
+import EditAppointment from './models/EditAppointment.vue'
+import appointment from '@/assets/js/api/appointment'
+
 import objectHelper from '@/assets/js/healpers/objectHelper'
 export default {
   name: 'Appointment',
-  mixins: [objectHelper],
+  mixins: [objectHelper, appointment],
   props: {
     appointment: { type: Object, required: true, default: () => undefined }
   },
@@ -49,12 +63,31 @@ export default {
     },
     setColor(status) {
       return status.value === this.appointment.status ? 'green' : '#DAA520'
+    },
+    updateAppointment(appointment) {
+      this.updateProductRequest(
+        {
+          url: `/Products/${product.Id}`,
+          method: 'PUT',
+          data: product
+        },
+        () => {
+          this.loading = false
+          this.$emit('product-updated', product)
+        },
+        error => {
+          console.error(error)
+          this.$toast.error('product update failed please contact support')
+        }
+      )
+      this.$refs.editProductRef.closeModal()
     }
   },
   computed: {},
   created() {
     this.createAppointmentStatusList()
-  }
+  },
+  components: { EditAppointment }
 }
 </script>
 <style lang="scss" scoped>

@@ -13,7 +13,10 @@
       v-for="appointment in myAppointments"
       :key="appointment.id"
     >
-      <Appointment :appointment="appointment" />
+      <Appointment
+        @get-appointment="appointmentSelected"
+        :appointment="appointment"
+      />
     </div>
   </v-row>
 </template>
@@ -67,6 +70,9 @@ export default {
           console.error(error)
         }
       )
+    },
+    appointmentSelected(id) {
+      return console.log(id)
     }
   },
   computed: {
