@@ -109,7 +109,29 @@ export default {
         return
       }
 
-      this.placeOrder()
+      this.placeOrder(
+        {
+          url: '/Orders',
+          method: 'POST',
+          data: {
+            Products: this.cartData,
+            MobileNo: this.mobileNo,
+            DeliveryAddress: this.address
+          }
+        },
+        () => {
+          this.$toast.success(
+            'Order placed successfully, make the payment and contact us to proceed'
+          )
+          this.$store.dispatch('clearAllFromCart')
+          setTimeout(() => {
+            this.$router.push('/')
+          }, 4000)
+        },
+        error => {
+          console.error(error)
+        }
+      )
     }
   },
   computed: {
