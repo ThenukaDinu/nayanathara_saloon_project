@@ -10,7 +10,6 @@
     v-else
     :headers="headers"
     :items="appointments"
-    sort-by="calories"
     class="elevation-1"
   >
     <template v-slot:top>

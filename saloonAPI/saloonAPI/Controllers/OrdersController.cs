@@ -33,7 +33,7 @@ namespace saloonAPI.Controllers
         }
 
         [HttpPost, Authorize]
-        public ActionResult<Appoinment> CreateOrder(OrderCreateVM orderCreateVM)
+        public ActionResult<Order> CreateOrder(OrderCreateVM orderCreateVM)
         {
             var products = orderCreateVM.Products;
             var UserId = User.Claims.FirstOrDefault(c => c.Type == "userId").Value;

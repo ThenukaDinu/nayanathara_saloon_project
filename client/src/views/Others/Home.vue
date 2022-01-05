@@ -18,7 +18,7 @@
     </v-carousel>
 
     <v-row class="home-welcome">
-      <div>Welcome to Nayanathara saloons</div>
+      <div>Welcome to Nayanathara salons</div>
     </v-row>
   </div>
 </template>
