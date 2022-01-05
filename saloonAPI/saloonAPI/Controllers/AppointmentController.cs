@@ -31,6 +31,7 @@ namespace saloonAPI.Controllers
             var vmAppoinment = _mapper.Map<List<Appoinment>>(appoinments);
             return Ok(vmAppoinment);
         }
+       
         [HttpPost, Authorize]
         public ActionResult<Appoinment> CreateAppointment(Appoinment appoinment)
         {
@@ -70,7 +71,7 @@ namespace saloonAPI.Controllers
         public IActionResult StatusUpdateAppointment(int appointmentId, Appoinment appoinment)
         {
             var appoinmentSelected = _sqlService.GetAppoinment(appointmentId);
-
+           
             if (appoinmentSelected is null)
             {
                 return NotFound();
@@ -79,7 +80,12 @@ namespace saloonAPI.Controllers
             {
                 appoinmentSelected.CompletedDate = DateTime.Now;
             }
-            appoinmentSelected.Status = appoinment.Status;
+            else if (appoinment.Status == AppoinmentStatus.Paid)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Cannot Paid Appointment!" });
+            }
+
+
 
             _sqlService.UpdateAppoinment(appoinmentSelected);
 

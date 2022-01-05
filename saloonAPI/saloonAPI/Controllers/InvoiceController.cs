@@ -53,11 +53,7 @@ namespace saloonAPI.Controllers
                 }
                 return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Something went wrong!" });
             }
-            return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Cannot Create Invoice for this invoice!" });
-
-
-
-
+            return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Please complete the appointment before make invoice!" });
         }
 
         [HttpPut("{invoiceId}"), Authorize]
