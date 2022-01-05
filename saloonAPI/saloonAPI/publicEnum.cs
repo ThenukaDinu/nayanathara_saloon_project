@@ -28,4 +28,15 @@ namespace saloonAPI
         Refunded,
         Paid
     }
+
+    public enum OrderStatus
+    {
+        Placed,
+        Paid,
+        Approved,
+        Delivered,
+        Completed,
+        Returned,
+        Canceled
+    }
 }

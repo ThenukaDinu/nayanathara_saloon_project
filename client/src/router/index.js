@@ -7,6 +7,7 @@ import { productRoutes } from '@/router/productRoutes'
 import { appointmentRoutes } from '@/router/appointmentRoutes'
 import { qrRoutes } from '@/router/qrRoutes'
 import { reportRoutes } from '@/router/reportRoutes'
+import { orderRoutes } from '@/router/orderRoutes'
 
 Vue.use(VueRouter)
 
@@ -32,7 +33,8 @@ const routes = [
   ...productRoutes,
   ...appointmentRoutes,
   ...qrRoutes,
-  ...reportRoutes
+  ...reportRoutes,
+  ...orderRoutes
 ]
 
 const router = new VueRouter({

@@ -150,7 +150,7 @@ export default {
         this.$toast.error('please enter a valid name')
         error = true
       }
-      if (!Number.isInteger(this.quentity)) {
+      if (Number.isNaN(parseInt(this.quentity))) {
         this.$toast.error('quentity should be number')
         error = true
       }
@@ -158,7 +158,7 @@ export default {
         this.$toast.error('quentity should be less than 100000')
         error = true
       }
-      if (Number.isNaN(this.price)) {
+      if (Number.isNaN(parseFloat(this.price))) {
         this.$toast.error('price should be numaric')
         error = true
       }

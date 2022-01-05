@@ -17,10 +17,7 @@
       @click="isUserAdmin && editProduct()"
       :class="[isUserAdmin ? 'pointer' : '']"
     >
-      <v-img
-        height="250"
-        :src="'https://cdn.vuetifyjs.com/images/cards/cooking.png'"
-      ></v-img>
+      <v-img height="250" :src="setImage(product.productImages)"></v-img>
       <v-card-title>{{ product.name }}</v-card-title>
       <v-card-text>
         <Like :product="product" />
@@ -51,7 +48,7 @@
         Delete
       </v-btn>
       <v-btn color="primary" outlined @click="viewProductDetails"> View </v-btn>
-      <v-btn color="success" outlined @click="buyProduct"> Buy </v-btn>
+      <v-btn color="success" outlined @click="buyProduct"> To Cart </v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -76,8 +73,15 @@ export default {
     selection: 1
   }),
   methods: {
+    setImage(images) {
+      if (images.length < 1) {
+        return 'https://images.pexels.com/photos/234220/pexels-photo-234220.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
+      }
+
+      return require(`../../../../saloonAPI/saloonAPI/Images/${images[0].uniqueName}`)
+    },
     buyProduct() {
-      console.log('buy clicked')
+      this.$store.dispatch('addToCart', this.product)
     },
     editProduct() {
       this.$refs.editProductRef.openModal()
