@@ -68,7 +68,10 @@
   </v-dialog>
 </template>
 <script>
+import { appointmentType } from '@/assets/js/enums/appointmentEnum'
+import objectHelper from '@/assets/js/healpers/objectHelper'
 export default {
+  mixins: [objectHelper],
   data: () => ({
     dialog: false,
     updateLoading: false,
@@ -77,10 +80,7 @@ export default {
     valid: true,
     DurationInMins: '',
     type: '',
-    DurationRules: [
-      v => !!v || 'Duration time is required',
-      v => (v && v.length <= 1) || 'Duration must be less than 2 hours'
-    ],
+    DurationRules: [v => !!v || 'Duration time is required'],
     items: [
       'HairCut',
       'ColouringAndStyling',
@@ -110,7 +110,7 @@ export default {
     openModal() {
       this.dialog = true
       this.$nextTick(() => {
-        this.type = this.appointment.typeText
+        this.type = this.getKeyByValue(appointmentType, this.appointment.type)
         this.DurationInMins = this.appointment.durationInMins
         this.date = new Date(
           Date.now(this.appointment.AppoinmentDate) -
@@ -152,6 +152,10 @@ export default {
         this.$toast.error('please enter a valid time')
         error = true
       }
+      if (this.DurationInMins.length > 3) {
+        this.$toast.error('this must be less than 2 hours')
+        error = true
+      }
       if (!this.date) {
         this.$toast.error('please enter a valid date')
         error = true
@@ -167,10 +171,12 @@ export default {
 
       if (error) return
       const appointment = {
-        Type: this.type,
+        Type: appointmentType[this.type],
         DurationInMins: this.DurationInMins,
-        AppoinmentDate: this.date
+        AppoinmentDate: this.date,
+        Id: this.appointment.id
       }
+
       this.$emit('update-appointment', appointment)
     },
     mounted() {}
