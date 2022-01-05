@@ -86,7 +86,7 @@ namespace saloonAPI.Controllers
             }
 
 
-
+            appoinmentSelected.Status = appoinment.Status;
             _sqlService.UpdateAppoinment(appoinmentSelected);
 
             return NoContent();

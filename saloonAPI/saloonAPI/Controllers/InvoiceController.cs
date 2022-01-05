@@ -36,12 +36,56 @@ namespace saloonAPI.Controllers
         [HttpPost, Authorize]
         public ActionResult<Invoice> CreateInvoice(Invoice invoice)
         {
-
+           
             var selectedAppoinment = _sqlServiceAppoinment.GetAppoinment(invoice.AppoinmentId);
 
             if (selectedAppoinment is not null && selectedAppoinment.Status == AppoinmentStatus.Completed)
             {
+                double chargePerMin = 0;
+                double totalCharge = 0;
                 invoice.CreatedDate = DateTime.Now;
+                //calculate invoice amount
+                int noOfMins = selectedAppoinment.DurationInMins;
+      
+
+                if (selectedAppoinment.Type == AppoinmentType.HairCut)
+                {
+                    chargePerMin = 40;
+                    totalCharge = chargePerMin * noOfMins;
+
+                }
+                else if(selectedAppoinment.Type == AppoinmentType.ColouringAndStyling)
+                {
+                    chargePerMin = 35;
+                    totalCharge = chargePerMin * noOfMins;
+                }
+                else if (selectedAppoinment.Type == AppoinmentType.FacialAndSkinCareTreatment)
+                {
+                    chargePerMin = 30;
+                    totalCharge = chargePerMin * noOfMins;
+                }
+                else if (selectedAppoinment.Type == AppoinmentType.Makeup)
+                {
+                    chargePerMin = 25;
+                    totalCharge = chargePerMin * noOfMins;
+                }
+                else if(selectedAppoinment.Type == AppoinmentType.NailTreatment)
+                {
+                    chargePerMin = 20;
+                    totalCharge = chargePerMin * noOfMins;
+                }
+                else if (selectedAppoinment.Type == AppoinmentType.WaxingAndHairRemoval)
+                {
+                    chargePerMin = 15;
+                    totalCharge = chargePerMin * noOfMins;
+                }
+                else
+                {
+                    chargePerMin = 10;
+                    totalCharge = chargePerMin * noOfMins;
+                }
+
+                invoice.Amount = totalCharge;
                 var result = _sqlService.SaveInvoice(invoice);
 
                 if (result is not null)
@@ -54,37 +98,6 @@ namespace saloonAPI.Controllers
                 return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Something went wrong!" });
             }
             return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Please complete the appointment before make invoice!" });
-        }
-
-        [HttpPut("{invoiceId}"), Authorize]
-        public IActionResult UpdateInvoice(int invoiceId, Invoice invoice)
-        {
-            var invoiceSelected = _sqlService.GetInvoice(invoiceId);
-
-            if (invoiceSelected is null)
-            {
-                return NotFound();
-            }
-            invoiceSelected.InvoiceNo = invoice.InvoiceNo;
-            invoiceSelected.AppoinmentId = invoice.AppoinmentId;
-       
-            _sqlService.UpdateInvoice(invoiceSelected);
-
-            return NoContent();
-        }
-
-        [HttpDelete("{invoiceId}"), Authorize]
-        public IActionResult DeleteInvoice(int invoiceId)
-        {
-            var selectedInvoice = _sqlService.GetInvoice(invoiceId);
-            if (selectedInvoice is null)
-            {
-                return NotFound();
-            }
-
-            _sqlService.DeleteInvoice(selectedInvoice);
-
-            return NoContent();
         }
     }
 
