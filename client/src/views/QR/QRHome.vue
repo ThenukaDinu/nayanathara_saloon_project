@@ -15,9 +15,9 @@
           >Download</v-btn
         >
         <v-spacer></v-spacer>
-        <v-btn class="mt-5 white--text" color="blue" @click="print"
+        <!-- <v-btn class="mt-5 white--text" color="blue" @click="print"
           >Print &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</v-btn
-        >
+        > -->
       </div>
     </v-row>
   </div>

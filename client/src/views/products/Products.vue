@@ -66,17 +66,11 @@ export default {
   }),
   methods: {
     productUpdated(product) {
-      this.products
-        .find(p => p.id === product.Id)
-        .map(p => {
-          return {
-            ...p,
-            name: product.Name,
-            description: product.Description,
-            price: product.Price,
-            quentity: product.Quentity
-          }
-        })
+      const selectedProduct = this.products.find(p => p.id === product.Id)
+      selectedProduct.name = product.Name
+      selectedProduct.description = product.Description
+      selectedProduct.price = product.Price
+      selectedProduct.quentity = product.Quentity
     },
     productDeleted(productId) {
       this.products = this.products.filter(p => p.id !== productId)

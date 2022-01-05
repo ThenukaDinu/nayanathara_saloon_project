@@ -3,7 +3,7 @@
     <v-container :fluid="true" class="sign-in-wrapper">
       <v-row>
         <v-col cols="12" lg="3" md="3" class="left-side">
-          <div class="welcome-text">Hello, Welcome to Nayanathara Saloons</div>
+          <div class="welcome-text">Hello, Welcome to Nayanathara Salons</div>
           <div class="welcome-text-2">
             <i
               >Join with us by filling details and feel the hight quality

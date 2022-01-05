@@ -5,7 +5,9 @@
       text
       icon
       :color="isAlreadyLikedByCurrentUser ? '#224638' : 'Gray'"
-      @click="!isAlreadyLikedByCurrentUser ? incrementLike() : removeLike()"
+      @click.stop="
+        !isAlreadyLikedByCurrentUser ? incrementLike() : removeLike()
+      "
     >
       <v-icon small>mdi-thumb-up</v-icon>
     </v-btn>

@@ -3,7 +3,7 @@
     <ul class="menu">
       <li class="logo">
         <router-link exact :style="{ color: '#fff !important' }" to="/"
-          >Nayanathara Saloons</router-link
+          >Nayanathara Salons</router-link
         >
       </li>
       <li class="item"><router-link class="item" to="/">Home</router-link></li>
@@ -16,6 +16,9 @@
       <li class="item"><router-link to="/qrHome">QR</router-link></li>
       <li class="item">
         <router-link class="item" to="/about">About</router-link>
+      </li>
+      <li class="item" v-if="isUserAdmin">
+        <router-link class="item" to="/manageOrders">Manage Orders</router-link>
       </li>
       <li v-if="isUserAdmin" class="item">
         <router-link to="/reports">Reports</router-link>
