@@ -34,8 +34,10 @@
         </div>
         <v-row>
           <div class="mt-6 ml-3">
-            <v-btn color="green"> Place Order </v-btn>
-            <v-btn color="red" class="ml-5" @click="clearAll">
+            <v-btn color="green" class="white--text" @click="placeOrder">
+              Place Order
+            </v-btn>
+            <v-btn color="red" class="ml-5 white--text" @click="clearAll">
               Clear All
             </v-btn>
           </div>
@@ -63,6 +65,9 @@ export default {
     },
     removeFromCart(product) {
       this.$store.dispatch('removeFromCart', product)
+    },
+    placeOrder() {
+      this.$router.push('/placeOrder')
     }
   },
   computed: {

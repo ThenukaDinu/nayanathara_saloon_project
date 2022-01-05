@@ -13,5 +13,6 @@ namespace saloonAPI.Models
         public int ProductId { get; set; }
         public virtual Product Product { get; set; }
         public DateTime CreatedDate { get; set; }
+        public double Amount { get; set; }
     }
 }
