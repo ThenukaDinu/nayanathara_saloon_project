@@ -7,5 +7,16 @@ export const orderRoutes = [
     meta: {
       isRequiredAuth: true
     }
+  },
+  {
+    path: '/placeOrder',
+    name: 'PlaceOrder',
+    component: () =>
+      import(
+        /*webpackChunkName: "PlaceOrder" */ '@/views/Order/PlaceOrder.vue'
+      ),
+    meta: {
+      isRequiredAuth: true
+    }
   }
 ]
