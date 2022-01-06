@@ -99,6 +99,18 @@ namespace saloonAPI.Controllers
             }
             return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Please complete the appointment before make invoice!" });
         }
+        [HttpGet("order/{orderId}")]
+        public ActionResult<Invoice> GetInvoiceByOrder(int orderId)
+        {
+           Invoice invoice = _sqlService.GetInvoiceByOrder(orderId);
+            return Ok(invoice);
+        }
+        [HttpGet("appointment/{appointmentId}")]
+        public ActionResult<Invoice> GetInvoiceByAppoinement(int appointmentId)
+        {
+            Invoice invoice = _sqlService.GetInvoiceByAppoientment(appointmentId);
+            return Ok(invoice);
+        }
     }
 
 }

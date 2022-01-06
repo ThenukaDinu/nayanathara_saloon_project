@@ -9,6 +9,7 @@ namespace saloonAPI.Services
     public interface IOrderRepository
     {
         public List<Order> GetAllOrders();
+        public List<Order> GetOrdersByUser(string UserId);
         public Order SaveOrder(Order order);
         public void UpdateOrder(Order order);
         public void DeleteOrder(Order order);

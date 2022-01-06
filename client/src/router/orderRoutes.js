@@ -29,5 +29,14 @@ export const orderRoutes = [
     meta: {
       isRequiredAuth: true
     }
+  },
+  {
+    path: '/myOrders',
+    name: 'Orders',
+    component: () =>
+      import(/*webpackChunkName: "MyOrders" */ '@/views/Order/MyOrders.vue'),
+    meta: {
+      isRequiredAuth: true
+    }
   }
 ]

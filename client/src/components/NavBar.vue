@@ -20,6 +20,9 @@
       <li class="item" v-if="isUserAdmin">
         <router-link class="item" to="/manageOrders">Manage Orders</router-link>
       </li>
+      <li class="item">
+        <router-link class="item" to="/myOrders">My Orders</router-link>
+      </li>
       <li v-if="isUserAdmin" class="item">
         <router-link to="/reports">Reports</router-link>
       </li>

@@ -40,5 +40,9 @@ namespace saloonAPI.Services
             order.OrderStatus = (OrderStatus)status;
             _context.SaveChanges();
         }
+        public List<Order> GetOrdersByUser(string UserId)
+        {
+            return _context.Orders.Where(o => o.CustomerId == UserId).ToList();
+        }
     }
 }
