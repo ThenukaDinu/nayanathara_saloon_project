@@ -32,11 +32,8 @@ namespace saloonAPI
     public enum OrderStatus
     {
         Placed,
-        Paid,
         Approved,
-        Delivered,
-        Completed,
-        Returned,
+        Paid,
         Canceled
     }
 }

@@ -35,5 +35,11 @@ namespace saloonAPI.Services
             _context.Invoices.Remove(invoice);
             _context.SaveChanges();
         }
+
+        public List<Invoice> GetInvoiceByOrderId(int orderId)
+        {
+            var invoices = _context.OrderInvoices.Where(oi => oi.OrderId == orderId).Select(x => x.Invoice).ToList();
+            return invoices;
+        }
     }
 }

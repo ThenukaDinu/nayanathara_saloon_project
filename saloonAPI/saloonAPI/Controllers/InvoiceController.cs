@@ -19,7 +19,7 @@ namespace saloonAPI.Controllers
         private readonly IAppointmentRepository _sqlServiceAppoinment;
         private readonly IMapper _mapper;
 
-        public InvoiceController(IInvoiceRepository dataAccessRepository,IAppointmentRepository appointmentRepository, IMapper mapper)
+        public InvoiceController(IInvoiceRepository dataAccessRepository, IAppointmentRepository appointmentRepository, IMapper mapper)
         {
             _sqlService = dataAccessRepository;
             _sqlServiceAppoinment = appointmentRepository;
@@ -36,8 +36,8 @@ namespace saloonAPI.Controllers
         [HttpPost, Authorize]
         public ActionResult<Invoice> CreateInvoice(Invoice invoice)
         {
-           
-            var selectedAppoinment = _sqlServiceAppoinment.GetAppoinment(invoice.AppoinmentId);
+
+            var selectedAppoinment = _sqlServiceAppoinment.GetAppoinment(invoice.AppoinmentId.Value);
 
             if (selectedAppoinment is not null && selectedAppoinment.Status == AppoinmentStatus.Completed)
             {
@@ -46,7 +46,7 @@ namespace saloonAPI.Controllers
                 invoice.CreatedDate = DateTime.Now;
                 //calculate invoice amount
                 int noOfMins = selectedAppoinment.DurationInMins;
-      
+
 
                 if (selectedAppoinment.Type == AppoinmentType.HairCut)
                 {
@@ -54,7 +54,7 @@ namespace saloonAPI.Controllers
                     totalCharge = chargePerMin * noOfMins;
 
                 }
-                else if(selectedAppoinment.Type == AppoinmentType.ColouringAndStyling)
+                else if (selectedAppoinment.Type == AppoinmentType.ColouringAndStyling)
                 {
                     chargePerMin = 35;
                     totalCharge = chargePerMin * noOfMins;
@@ -69,7 +69,7 @@ namespace saloonAPI.Controllers
                     chargePerMin = 25;
                     totalCharge = chargePerMin * noOfMins;
                 }
-                else if(selectedAppoinment.Type == AppoinmentType.NailTreatment)
+                else if (selectedAppoinment.Type == AppoinmentType.NailTreatment)
                 {
                     chargePerMin = 20;
                     totalCharge = chargePerMin * noOfMins;
@@ -98,6 +98,13 @@ namespace saloonAPI.Controllers
                 return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Something went wrong!" });
             }
             return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Please complete the appointment before make invoice!" });
+        }
+
+        [HttpGet("getAllInvoiceForProductOrder/{orderId}"), Authorize]
+        public IActionResult GetAllInvoiceForProductOrder(int orderId)
+        {
+            var invoices = _sqlService.GetInvoiceByOrderId(orderId);
+            return Ok(invoices);
         }
     }
 
