@@ -41,6 +41,10 @@ namespace saloonAPI.Controllers
 
             if (selectedAppoinment is not null && selectedAppoinment.Status == AppoinmentStatus.Completed)
             {
+                var r = new Random();
+                //invoice no generate 
+                invoice.InvoiceNo = "Inv-" + invoice.Id + "-" + invoice.CreatedDate.ToString("yyyy-MM-dd") + r.Next(0, 100000).ToString();
+                _sqlService.UpdateInvoice(invoice);
                 double chargePerMin = 0;
                 double totalCharge = 0;
                 invoice.CreatedDate = DateTime.Now;
