@@ -5,9 +5,9 @@
       <v-form class="mt-5" ref="form" v-model="valid" lazy-validation>
         <v-text-field
           v-model="DurationInMins"
-          :counter="100"
+          :counter="3"
           :rules="DurationRules"
-          label="DurationRules"
+          label="Duration"
           required
         ></v-text-field>
         <v-menu
@@ -61,9 +61,11 @@
 </template>
 <script>
 import appointments from '@/assets/js/api/appointments'
+import { appointmentType } from '@/assets/js/enums/appointmentEnum'
+import objectHelper from '../../assets/js/healpers/objectHelper'
 export default {
   name: 'PlaceAppointment',
-  mixins: [appointments],
+  mixins: [appointments, objectHelper],
   props: {},
   data: () => ({
     saveLoading: false,
@@ -71,7 +73,7 @@ export default {
     addNewDialog: false,
     valid: true,
     DurationInMins: '',
-    type: '',
+    type: null,
     DurationRules: [
       v => !!v || 'Duration time is required',
       v => (v && v.length <= 3) || 'Duration must be less than 2 hours'
@@ -95,15 +97,9 @@ export default {
       arg1()
       arg2()
     },
-    openModel() {
-      this.addNewDialog = true
-    },
-    closeModel() {
+    resetAllFormData() {
       this.resetValidation()
       this.reset()
-      this.$nextTick(() => {
-        this.addNewDialog = false
-      })
     },
     startLoading() {
       this.saveLoading = true
@@ -149,7 +145,7 @@ export default {
       }
       if (error) return
       const appointment = {
-        Type: this.type,
+        Type: appointmentType[this.type],
         DurationInMins: this.DurationInMins,
         AppoinmentDate: this.date
       }
@@ -164,22 +160,30 @@ export default {
 
       await this.postAppointment(
         data,
-        response => {
-          response.data.isShow = true
-          this.appointment.push(response.data)
+        () => {
           this.stopLoading()
-          this.closeModel()
+          this.resetAllFormData()
           this.$toast.success('Appointment created successfully')
+          setTimeout(() => {
+            this.$emit('new-appointment-created')
+          }, 100)
         },
         error => {
           this.stopLoading()
-          for (const [key, value] of Object.entries(
+          if (
+            error &&
+            error.response &&
+            error.response.data &&
             error.response.data.errors
-          )) {
-            console.log(key)
-            value.forEach(v => {
-              this.$toast.error(v)
-            })
+          ) {
+            for (const [key, value] of Object.entries(
+              error.response.data.errors
+            )) {
+              console.log(key)
+              value.forEach(v => {
+                this.$toast.error(v)
+              })
+            }
           }
           console.error(error)
         }
