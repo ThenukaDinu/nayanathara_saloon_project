@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using saloonAPI.Models;
 using saloonAPI.Services;
@@ -8,7 +7,7 @@ using saloonAPI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace saloonAPI.Controllers
 {
@@ -35,7 +34,7 @@ namespace saloonAPI.Controllers
         }
 
         [HttpPost, Authorize]
-        public ActionResult<Order> CreateOrder(OrderCreateVM orderCreateVM)
+        public ActionResult<Appoinment> CreateOrder(OrderCreateVM orderCreateVM)
         {
             var products = orderCreateVM.Products;
             var UserId = User.Claims.FirstOrDefault(c => c.Type == "userId").Value;
@@ -67,6 +66,14 @@ namespace saloonAPI.Controllers
 
             return Created("Orders", orderCreated);
         }
+       
+        [HttpGet("my-orders")]
+        public ActionResult<IList<Order>> GetMyOrders()
+        {
+            List<Order> orders = _sqlService.GetAllOrders();
+            return Ok(orders);
+        }
+        
 
         [HttpPut("{orderId}/orderStatusChange"), Authorize]
         public IActionResult ChangeOrderStatus(int orderId, OrderStatusChangeRequestVM request)
@@ -123,4 +130,6 @@ namespace saloonAPI.Controllers
             return Created("Orders", invoiceToReturn);
         }
     }
+   
+
 }

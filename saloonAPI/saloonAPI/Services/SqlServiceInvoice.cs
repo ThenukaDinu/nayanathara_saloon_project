@@ -17,6 +17,16 @@ namespace saloonAPI.Services
         {
             return _context.Invoices.FirstOrDefault(c => c.Id == invoiceId);
         }
+        public Invoice GetInvoiceByOrder(int orderId)
+        {
+            var invoiceId = _context.OrderInvoices.FirstOrDefault(c => c.OrderId == orderId).InvoiceId;
+            return _context.Invoices.FirstOrDefault(c => c.Id == invoiceId);
+
+        }
+        public Invoice GetInvoiceByAppoientment(int appointmentId)
+        {
+            return _context.Invoices.FirstOrDefault(i => i.AppoinmentId == appointmentId);
+        }
 
         public Invoice SaveInvoice(Invoice invoice)
         {

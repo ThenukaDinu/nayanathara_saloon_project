@@ -14,5 +14,7 @@ namespace saloonAPI.Services
         public void DeleteInvoice(Invoice invoice);
         public Invoice GetInvoice(int invoiceId);
         public List<Invoice> GetInvoiceByOrderId(int orderId);
+        public Invoice GetInvoiceByOrder(int orderId);
+        public Invoice GetInvoiceByAppoientment(int appointmentId);
     }
 }

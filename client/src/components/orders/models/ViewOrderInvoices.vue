@@ -39,7 +39,7 @@
 import order from '@/assets/js/api/order'
 import moment from 'moment'
 export default {
-  name: 'viewChangeStatus',
+  name: 'ViewOrderInvoices',
   mixins: [order],
   props: {
     order: {
@@ -57,10 +57,10 @@ export default {
       this.getInvoices()
       this.dialog = true
     },
-    getInvoices() {
+    async getInvoices() {
       const orderSelected = this.order
       const self = this
-      this.GetInvoicesForOrder(
+      await this.GetInvoicesForOrder(
         {
           url: `/Invoice/getAllInvoiceForProductOrder/${orderSelected.id}`,
           method: 'GET'

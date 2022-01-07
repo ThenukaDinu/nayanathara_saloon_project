@@ -38,9 +38,17 @@ namespace saloonAPI.Controllers
         {
 
             var selectedAppoinment = _sqlServiceAppoinment.GetAppoinment(invoice.AppoinmentId.Value);
-
+           
+            if(_sqlService.GetInvoiceByAppoientment(selectedAppoinment.Id) is not null)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Appointment already has an invoice!" });
+            }
             if (selectedAppoinment is not null && selectedAppoinment.Status == AppoinmentStatus.Completed)
             {
+                var r = new Random();
+                //invoice no generate 
+                invoice.InvoiceNo = "Inv-" + invoice.Id + "-" + invoice.CreatedDate.ToString("yyyy-MM-dd") + r.Next(0, 100000).ToString();
+                _sqlService.UpdateInvoice(invoice);
                 double chargePerMin = 0;
                 double totalCharge = 0;
                 invoice.CreatedDate = DateTime.Now;
@@ -98,6 +106,18 @@ namespace saloonAPI.Controllers
                 return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Something went wrong!" });
             }
             return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Please complete the appointment before make invoice!" });
+        }
+        [HttpGet("order/{orderId}")]
+        public ActionResult<Invoice> GetInvoiceByOrder(int orderId)
+        {
+           Invoice invoice = _sqlService.GetInvoiceByOrder(orderId);
+            return Ok(invoice);
+        }
+        [HttpGet("appointment/{appointmentId}")]
+        public ActionResult<Invoice> GetInvoiceByAppoinement(int appointmentId)
+        {
+            Invoice invoice = _sqlService.GetInvoiceByAppoientment(appointmentId);
+            return Ok(invoice);
         }
 
         [HttpGet("getAllInvoiceForProductOrder/{orderId}"), Authorize]
