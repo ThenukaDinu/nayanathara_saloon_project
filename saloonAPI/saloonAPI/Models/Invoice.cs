@@ -13,7 +13,7 @@ namespace saloonAPI.Models
         public DateTime CreatedDate { get; set; }
         [Range(0, Double.MaxValue)]
         public double Amount { get; set; }
-        public int AppoinmentId { get; set; }
+        public int? AppoinmentId { get; set; }
         public virtual Appoinment Appoinment { get; set; }
         public virtual ICollection<OrderInvoice> OrderInvoices { get; set; } = new List<OrderInvoice>();
     }
