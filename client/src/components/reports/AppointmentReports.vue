@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mx-4 appointment-by-type">
-      <h1 class="mb-10">Appointments by type</h1>
+      <h1 class="mb-10">Appointments Type Report</h1>
       <v-row class="ml-1">
         <v-menu
           ref="menu"
@@ -45,9 +45,16 @@
         class="elevation-1 mt-6"
         :loading="appointmentsByTypeLoading"
       ></v-data-table>
+
+      <AppointmentTypeChart
+        class="my-6"
+        v-if="appointmentsByTypeData && appointmentsByTypeData.length > 0"
+        :chartData="appointmentsByTypeData"
+        label="Appointment Type Report"
+      />
     </div>
     <div class="mx-4 mt-10 appointment-amounts">
-      <h1 class="mb-10">Appointments Finanace</h1>
+      <h1 class="mb-10">Appointments Finanace Report</h1>
       <v-row class="ml-1">
         <v-select
           v-model="selectedYear"
@@ -64,12 +71,20 @@
         class="elevation-1 mt-6"
         :loading="appointmentAmountsLoading"
       ></v-data-table>
+      <AppointmentFinanaceChart
+        class="my-6"
+        v-if="appointmentAmountsData && appointmentAmountsData.length > 0"
+        :chartData="appointmentAmountsData"
+        label="Appointments Finanace Report"
+      />
     </div>
   </div>
 </template>
 <script>
 import moment from 'moment'
 import reports from '@/assets/js/api/reports'
+import AppointmentTypeChart from './charts/AppointmentTypeChart.vue'
+import AppointmentFinanaceChart from './charts/AppointmentFinanaceChart.vue'
 export default {
   name: 'AppointmentReports',
   mixins: [reports],
@@ -154,7 +169,6 @@ export default {
       var max = new Date().getFullYear()
       var min = max - howMany
       var years = []
-
       for (var i = max; i >= min; i--) {
         years.push(i)
       }
@@ -169,7 +183,8 @@ export default {
     this.years = this.generateArrayOfYears(20)
     this.getAppointsByType()
     this.getAppointmentAmountsByYear()
-  }
+  },
+  components: { AppointmentTypeChart, AppointmentFinanaceChart }
 }
 </script>
 <style lang="scss"></style>
