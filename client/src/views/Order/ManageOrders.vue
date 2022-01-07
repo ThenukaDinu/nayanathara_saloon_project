@@ -99,8 +99,8 @@ import order from '@/assets/js/api/order'
 import moment from 'moment'
 import { orderStatus } from '@/assets/js/enums/orderEnum'
 import objectHelper from '@/assets/js/healpers/objectHelper'
-import ViewOrderInvoices from '../../components/orders/ViewOrderInvoices.vue'
 import AddAmount from '@/components/orders/models/AddAmount.vue'
+import ViewOrderInvoices from '@/components/orders/models/ViewOrderInvoices.vue'
 export default {
   name: 'ManageOrders',
   mixins: [order, objectHelper],
@@ -162,6 +162,7 @@ export default {
       )
     },
     viewInvoices(item) {
+      console.log(item)
       this.selectedOrderForInvoiceView = item
       setTimeout(() => {
         this.$refs.invoiceModalRef.openModal()
@@ -246,7 +247,7 @@ export default {
   created() {
     this.getAllOrders()
   },
-  components: { ViewOrderInvoices, AddAmount }
+  components: { AddAmount, ViewOrderInvoices }
 }
 </script>
 

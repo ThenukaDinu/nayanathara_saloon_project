@@ -38,24 +38,13 @@
 <script>
 import order from '@/assets/js/api/order'
 import moment from 'moment'
-import appointments from '../../assets/js/api/appointments'
 export default {
-  name: 'viewChangeStatus',
-  mixins: [order, appointments],
+  name: 'ViewOrderInvoices',
+  mixins: [order],
   props: {
-    type: {
-      type: String,
-      required: false,
-      default: 'order'
-    },
     order: {
       type: Object,
-      required: false,
-      default: () => undefined
-    },
-    appointment: {
-      type: Object,
-      required: false,
+      required: true,
       default: () => undefined
     }
   },
@@ -65,38 +54,13 @@ export default {
   }),
   methods: {
     openModal() {
-      if (this.type === 'order') {
-        this.getInvoices()
-      } else {
-        this.getAppoinmentInvoices()
-      }
+      this.getInvoices()
       this.dialog = true
     },
-    getInvoices() {
+    async getInvoices() {
       const orderSelected = this.order
       const self = this
-      this.GetInvoicesForOrder(
-        {
-          url: `/Invoice/appointment/${orderSelected.id}`,
-          method: 'GET'
-        },
-        response => {
-          const temp = response.data
-
-          temp.createdDateFormatted = moment(
-            new Date(Date.parse(response.data.createdDate))
-          ).format('MMM DD YYYY')
-          self.invoicesData.push(temp)
-        },
-        error => {
-          console.error(error)
-        }
-      )
-    },
-    getAppoinmentInvoices() {
-      const orderSelected = this.appointment
-      const self = this
-      this.GetInvoicesForAppointment(
+      await this.GetInvoicesForOrder(
         {
           url: `/Invoice/getAllInvoiceForProductOrder/${orderSelected.id}`,
           method: 'GET'
