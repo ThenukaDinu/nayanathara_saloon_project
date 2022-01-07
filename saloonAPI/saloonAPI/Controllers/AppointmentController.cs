@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using saloonAPI.Services;
 using saloonAPI.Models;
 using AutoMapper;
@@ -16,11 +15,13 @@ namespace saloonAPI.Controllers
     public class AppointmentController : ControllerBase
     {
         private readonly IAppointmentRepository _sqlService;
+        private readonly IInvoiceRepository _sqlServiceInvoice;
         private readonly IMapper _mapper;
 
-        public AppointmentController(IAppointmentRepository dataAccessRepository, IMapper mapper)
+        public AppointmentController(IAppointmentRepository dataAccessRepository, IInvoiceRepository dataAccessRepositoryInvoice, IMapper mapper)
         {
             _sqlService = dataAccessRepository;
+            _sqlServiceInvoice = dataAccessRepositoryInvoice;
             _mapper = mapper;
         }
 
@@ -75,6 +76,10 @@ namespace saloonAPI.Controllers
             if (appoinmentSelected is null)
             {
                 return NotFound();
+            }
+            else if (_sqlServiceInvoice.GetInvoiceByAppoientment(appoinmentSelected.Id) is not null)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Cannot Change this Appointment!" });
             }
             else if (appoinmentSelected.Status == AppoinmentStatus.Completed)
             {

@@ -1,5 +1,10 @@
 <template>
   <v-card v-if="order" width="385" class="mx-4 appointment pointer">
+    <ShowInvoice
+      v-if="invoices"
+      :invoices="invoices"
+      ref="invoiceRefModel"
+    ></ShowInvoice>
     <v-img
       height="120px"
       src="https://images.pexels.com/photos/1257894/pexels-photo-1257894.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
@@ -39,16 +44,20 @@
 </template>
 <script>
 import { orderStatus } from '../../assets/js/enums/orderEnum'
+import order from '@/assets/js/api/order'
 import invoices from '../../assets/js/api/invoices'
+import ShowInvoice from '../../views/Order/models/ShowInvoice.vue'
+import moment from 'moment'
 export default {
   name: 'Order',
-  mixins: [invoices],
+  mixins: [invoices, order],
   props: {
     order: { type: Object, required: true, default: () => undefined }
   },
+  components: { ShowInvoice },
   data: () => ({
     orderStatusList: [],
-    invoice: null
+    invoices: null
   }),
   methods: {
     createOrderStatusList() {
@@ -61,13 +70,24 @@ export default {
     },
     async viewInvoice() {
       this.loading = true
-      await this.getInvoices(
+      await this.GetInvoicesForOrder(
         {
-          url: '/Invoice/order/' + 2,
+          url: '/Invoice/getAllInvoiceForProductOrder/' + this.order.id,
           Method: 'GET'
         },
         response => {
-          this.invoice = response.data.this.loading = false
+          this.invoices = response.data.map(a => {
+            return {
+              ...a,
+              createdDateFormatted: moment(
+                new Date(Date.parse(a.createdDate))
+              ).format('MMM DD YYYY')
+            }
+          })
+          this.loading = false
+          setTimeout(() => {
+            this.$refs.invoiceRefModel.openModal()
+          }, 100)
         },
         error => {
           this.loading = true

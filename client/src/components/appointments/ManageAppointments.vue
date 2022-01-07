@@ -70,13 +70,42 @@
       </v-toolbar>
     </template>
     <template v-slot:item.actions="{ item }">
-      <v-btn small @click="changeStatus(item)" color="green" class="white--text"
+      <v-btn
+        v-if="viewChangeStatus(item)"
+        small
+        @click="changeStatus(item)"
+        color="green"
+        class="white--text"
         >Change Status</v-btn
       >
+      <span>
+        <v-btn
+          v-if="generateInvoiceShow(item)"
+          small
+          @click="generateInvoiceConfirm(item)"
+          color="blue"
+          class="white--text"
+          >Generate Invoice</v-btn
+        >
+        <v-btn
+          v-if="viewInvoiceShow(item)"
+          small
+          @click="viewInvoices(item)"
+          color="orange"
+          class="white--text"
+          >View Invoices</v-btn
+        >
+      </span>
     </template>
     <template v-slot:no-data>
       <v-btn color="primary" @click="initialize"> Reset </v-btn>
     </template>
+    <ViewOrderInvoices
+      v-if="selectedOrderForInvoiceView"
+      :appointment="selectedOrderForInvoiceView"
+      :type="'appoinment'"
+      ref="refViewAppInvoice"
+    />
   </v-data-table>
 </template>
 <script>
@@ -86,11 +115,14 @@ import {
   appointmentStatus
 } from '@/assets/js/enums/appointmentEnum'
 import moment from 'moment'
+import order from '@/assets/js/api/order'
 import objectHelper from '../../assets/js/healpers/objectHelper'
+import ViewOrderInvoices from '../orders/ViewOrderInvoices.vue'
 export default {
   name: 'ManageAppointments',
-  mixins: [appointments, objectHelper],
+  mixins: [appointments, objectHelper, order],
   data: () => ({
+    selectedOrderForInvoiceView: null,
     loading: false,
     statusSelected: 0,
     dialog: false,
@@ -123,6 +155,50 @@ export default {
     //
   },
   methods: {
+    generateInvoiceConfirm(item) {
+      // const self = this
+      this.GenerateInvoiceForOrder(
+        {
+          url: `/Invoice`,
+          method: 'POST',
+          data: {
+            AppoinmentId: item.id
+          }
+        },
+        () => {
+          this.$toast.success(
+            'Successfully generated invoice for the appointment'
+          )
+        },
+        error => {
+          this.$toast.error(error.response.data.message)
+        }
+      )
+    },
+    viewChangeStatus(item) {
+      return item.status !== 4 && item.status !== 8
+    },
+    changeStatus(item) {
+      this.selectedIndex = this.appointments.indexOf(item)
+      this.selectedItem = item
+      this.statusSelected = this.selectedItem.status
+      this.dialogStatus = true
+    },
+    viewInvoiceShow(item) {
+      return item.status === 8
+    },
+    viewInvoices(item) {
+      this.selectedOrderForInvoiceView = item
+      setTimeout(() => {
+        this.$refs.refViewAppInvoice.openModal()
+      }, 1000)
+    },
+    generateInvoiceShow(item) {
+      return item.status === 4
+    },
+    generateInvoice(item) {
+      this.selectedItem = item
+    },
     initialize() {
       this.appointments = this.responseData.map(a => {
         return {
@@ -145,13 +221,6 @@ export default {
       })
       this.loading = false
     },
-    changeStatus(item) {
-      this.selectedIndex = this.appointments.indexOf(item)
-      this.selectedItem = item
-      this.statusSelected = this.selectedItem.status
-      this.dialogStatus = true
-    },
-
     dialogStatusConfirm() {
       const appointmentObj = this.appointments.find(
         a => a.id === this.selectedItem.id
@@ -184,7 +253,6 @@ export default {
       )
       this.closeDialogStatus()
     },
-
     close() {
       this.dialogStatus = false
       this.$nextTick(() => {
@@ -192,7 +260,6 @@ export default {
         this.selectedIndex = -1
       })
     },
-
     closeDialogStatus() {
       this.dialogStatus = false
       this.$nextTick(() => {
@@ -200,7 +267,6 @@ export default {
         this.selectedIndex = -1
       })
     },
-
     async getAppointments() {
       this.loading = true
       await this.appointmentsGet(
@@ -218,7 +284,8 @@ export default {
         }
       )
     }
-  }
+  },
+  components: { ViewOrderInvoices }
 }
 </script>
 <style lang="scss"></style>

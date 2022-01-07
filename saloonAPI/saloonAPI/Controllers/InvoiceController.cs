@@ -38,7 +38,11 @@ namespace saloonAPI.Controllers
         {
 
             var selectedAppoinment = _sqlServiceAppoinment.GetAppoinment(invoice.AppoinmentId.Value);
-
+           
+            if(_sqlService.GetInvoiceByAppoientment(selectedAppoinment.Id) is not null)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Appointment already has an invoice!" });
+            }
             if (selectedAppoinment is not null && selectedAppoinment.Status == AppoinmentStatus.Completed)
             {
                 var r = new Random();
