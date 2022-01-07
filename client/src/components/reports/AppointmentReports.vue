@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mx-4 appointment-by-type">
-      <h1 class="mb-10">Appointments by type</h1>
+      <h1 class="mb-10">Appointments Type Report</h1>
       <v-row class="ml-1">
         <v-menu
           ref="menu"
@@ -45,9 +45,15 @@
         class="elevation-1 mt-6"
         :loading="appointmentsByTypeLoading"
       ></v-data-table>
+
+      <AppointmentTypeChart
+        :chartData="appointmentsByTypeData"
+        chartType="line"
+        label="Appointment Type Report"
+      />
     </div>
     <div class="mx-4 mt-10 appointment-amounts">
-      <h1 class="mb-10">Appointments Finanace</h1>
+      <h1 class="mb-10">Appointments Finanace Report</h1>
       <v-row class="ml-1">
         <v-select
           v-model="selectedYear"
@@ -70,6 +76,7 @@
 <script>
 import moment from 'moment'
 import reports from '@/assets/js/api/reports'
+import AppointmentTypeChart from './charts/AppointmentTypeChart.vue'
 export default {
   name: 'AppointmentReports',
   mixins: [reports],
@@ -122,6 +129,7 @@ export default {
         },
         response => {
           this.appointmentsByTypeData = response.data
+          console.log(response.data)
           this.appointmentsByTypeLoading = false
         },
         error => {
@@ -154,7 +162,6 @@ export default {
       var max = new Date().getFullYear()
       var min = max - howMany
       var years = []
-
       for (var i = max; i >= min; i--) {
         years.push(i)
       }
@@ -169,7 +176,8 @@ export default {
     this.years = this.generateArrayOfYears(20)
     this.getAppointsByType()
     this.getAppointmentAmountsByYear()
-  }
+  },
+  components: { AppointmentTypeChart }
 }
 </script>
 <style lang="scss"></style>

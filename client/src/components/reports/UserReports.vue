@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mx-4 mt-10 appointment-amounts">
-      <h1 class="mb-10">User Appointment Counts</h1>
+      <h1 class="mb-10">Appointment Counts Report</h1>
       <v-row class="ml-1">
         <v-select
           v-model="selectedYear"
@@ -20,7 +20,7 @@
       ></v-data-table>
     </div>
     <div class="mx-4 mt-10 appointment-amounts">
-      <h1 class="mb-10">How Many New Users Per Month</h1>
+      <h1 class="mb-10">New Customers</h1>
       <v-row class="ml-1">
         <v-select
           v-model="selectedYear2"
