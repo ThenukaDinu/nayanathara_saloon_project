@@ -18,6 +18,15 @@
         class="elevation-1 mt-6"
         :loading="customerAppointmentCountLoading"
       ></v-data-table>
+      <AppointmentCountChart
+        class="my-6"
+        v-if="
+          customerAppointmentCountData &&
+          customerAppointmentCountData.length > 0
+        "
+        :chartData="customerAppointmentCountData"
+        label="Appointments Counts Report"
+      />
     </div>
     <div class="mx-4 mt-10 appointment-amounts">
       <h1 class="mb-10">New Customers</h1>
@@ -37,11 +46,19 @@
         class="elevation-1 mt-6"
         :loading="howManyUsersPerMonthtLoading"
       ></v-data-table>
+      <NewCustomersChart
+        class="my-6"
+        v-if="howManyUsersPerMonthData && howManyUsersPerMonthData.length > 0"
+        :chartData="howManyUsersPerMonthData"
+        label="New Customers Report"
+      />
     </div>
   </div>
 </template>
 <script>
 import reports from '@/assets/js/api/reports'
+import AppointmentCountChart from './charts/AppointmentCountChart.vue'
+import NewCustomersChart from './charts/NewCustomersChart.vue'
 export default {
   name: 'UserReports',
   mixins: [reports],
@@ -82,7 +99,6 @@ export default {
       var max = new Date().getFullYear()
       var min = max - howMany
       var years = []
-
       for (var i = max; i >= min; i--) {
         years.push(i)
       }
@@ -133,7 +149,8 @@ export default {
     this.years = this.generateArrayOfYears(20)
     this.getCustomerAppointmentCounts()
     this.getHowManyUsersPerMonth()
-  }
+  },
+  components: { AppointmentCountChart, NewCustomersChart }
 }
 </script>
 <style lang="scss"></style>

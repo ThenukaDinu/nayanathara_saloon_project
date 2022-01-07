@@ -18,11 +18,21 @@
         class="elevation-1 mt-6"
         :loading="howManyProductSoldByMonthLoading"
       ></v-data-table>
+      <ProductSoldReport
+        class="my-6"
+        v-if="
+          howManyProductSoldByMonthData &&
+          howManyProductSoldByMonthData.length > 0
+        "
+        :chartData="howManyProductSoldByMonthData"
+        label="Product Sold Report"
+      />
     </div>
   </div>
 </template>
 <script>
 import reports from '@/assets/js/api/reports'
+import ProductSoldReport from './charts/ProductSoldReport.vue'
 export default {
   name: 'ProductReports',
   mixins: [reports],
@@ -44,7 +54,7 @@ export default {
         sortable: true
       },
       {
-        text: 'Products Sold Amount',
+        text: 'Products Sold Amount (LKR)',
         value: 'productsSoldAmount',
         sortable: true
       }
@@ -55,7 +65,6 @@ export default {
       var max = new Date().getFullYear()
       var min = max - howMany
       var years = []
-
       for (var i = max; i >= min; i--) {
         years.push(i)
       }
@@ -85,7 +94,8 @@ export default {
   created() {
     this.years = this.generateArrayOfYears(20)
     this.getHowManyProductSoldByMonth()
-  }
+  },
+  components: { ProductSoldReport }
 }
 </script>
 <style lang="scss"></style>

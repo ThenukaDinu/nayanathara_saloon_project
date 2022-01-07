@@ -47,8 +47,9 @@
       ></v-data-table>
 
       <AppointmentTypeChart
+        class="my-6"
+        v-if="appointmentsByTypeData && appointmentsByTypeData.length > 0"
         :chartData="appointmentsByTypeData"
-        chartType="line"
         label="Appointment Type Report"
       />
     </div>
@@ -70,6 +71,12 @@
         class="elevation-1 mt-6"
         :loading="appointmentAmountsLoading"
       ></v-data-table>
+      <AppointmentFinanaceChart
+        class="my-6"
+        v-if="appointmentAmountsData && appointmentAmountsData.length > 0"
+        :chartData="appointmentAmountsData"
+        label="Appointments Finanace Report"
+      />
     </div>
   </div>
 </template>
@@ -77,6 +84,7 @@
 import moment from 'moment'
 import reports from '@/assets/js/api/reports'
 import AppointmentTypeChart from './charts/AppointmentTypeChart.vue'
+import AppointmentFinanaceChart from './charts/AppointmentFinanaceChart.vue'
 export default {
   name: 'AppointmentReports',
   mixins: [reports],
@@ -129,7 +137,6 @@ export default {
         },
         response => {
           this.appointmentsByTypeData = response.data
-          console.log(response.data)
           this.appointmentsByTypeLoading = false
         },
         error => {
@@ -177,7 +184,7 @@ export default {
     this.getAppointsByType()
     this.getAppointmentAmountsByYear()
   },
-  components: { AppointmentTypeChart }
+  components: { AppointmentTypeChart, AppointmentFinanaceChart }
 }
 </script>
 <style lang="scss"></style>
