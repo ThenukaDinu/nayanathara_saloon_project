@@ -42,7 +42,7 @@
           @click="validate"
           :loading="saveLoading"
         >
-          Save Product
+          Save Appoinment
         </v-btn>
 
         <v-btn

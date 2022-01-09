@@ -48,7 +48,7 @@
               @click="validate"
               :loading="updateLoading"
             >
-              Update Product
+              Update Appointment
             </v-btn>
 
             <v-btn
@@ -70,6 +70,7 @@
 <script>
 import { appointmentType } from '@/assets/js/enums/appointmentEnum'
 import objectHelper from '@/assets/js/healpers/objectHelper'
+import moment from 'moment'
 export default {
   mixins: [objectHelper],
   data: () => ({
@@ -112,12 +113,7 @@ export default {
       this.$nextTick(() => {
         this.type = this.getKeyByValue(appointmentType, this.appointment.type)
         this.DurationInMins = this.appointment.durationInMins
-        this.date = new Date(
-          Date.now(this.appointment.AppoinmentDate) -
-            new Date().getTimezoneOffset() * 60000
-        )
-          .toISOString()
-          .substr(0, 10)
+        this.date = moment(this.appointment.appoinmentDate).format('yyyy-MM-DD')
       })
     },
     closeModal() {
