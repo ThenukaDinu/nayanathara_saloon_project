@@ -154,7 +154,7 @@ export default {
   mounted() {},
   methods: {
     generateInvoiceConfirm(item) {
-      this.GenerateInvoiceForOrder(
+      this.GetInvoicesForAppointment(
         {
           url: `/Invoice`,
           method: 'POST',
