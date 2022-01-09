@@ -2,7 +2,9 @@
   <div class="appointments">
     <v-card>
       <v-tabs color="#897a58" right v-model="tab">
-        <v-tab class="v-tab" v-if="isUserAdmin">Manage Appointments</v-tab>
+        <v-tab :disabled="!isUserAdmin" class="v-tab"
+          >Manage Appointments</v-tab
+        >
         <v-tab class="v-tab">My appointments</v-tab>
         <v-tab class="v-tab">Place Appointment</v-tab>
         <v-tab-item v-for="n in 3" :key="n">
@@ -26,7 +28,7 @@ import PlaceAppointments from '../../components/appointments/PlaceAppointments.v
 export default {
   data() {
     return {
-      tab: 0,
+      tab: 1,
       items: [
         { title: 'Dashboard', icon: 'mdi-view-dashboard' },
         { title: 'Account', icon: 'mdi-account-box' },

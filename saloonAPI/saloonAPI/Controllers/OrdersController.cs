@@ -71,6 +71,8 @@ namespace saloonAPI.Controllers
         public ActionResult<IList<Order>> GetMyOrders()
         {
             List<Order> orders = _sqlService.GetAllOrders();
+            var UserId = User.Claims.FirstOrDefault(c => c.Type == "userId").Value;
+            orders = orders.Where(o => o.CustomerId == UserId).ToList();
             return Ok(orders);
         }
         

@@ -7,7 +7,7 @@ const mutations = {
     state.user = undefined
   },
   login(state, user) {
-    state.user = { ...state.user, ...user }
+    state.user = { ...user }
   },
   updateUser(state, payload) {
     state.user = { ...state.user, ...payload }

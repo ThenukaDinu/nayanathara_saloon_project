@@ -25,10 +25,12 @@ namespace saloonAPI.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public ActionResult<IList<Appoinment>> GetAllAppointments()
         {
             List<Appoinment> appoinments = _sqlService.GetAllAppointment();
+            var UserId = User.Claims.FirstOrDefault(c => c.Type == "userId").Value;
+            appoinments = appoinments.Where(a => a.UserId == UserId).ToList();
             var vmAppoinment = _mapper.Map<List<Appoinment>>(appoinments);
             return Ok(vmAppoinment);
         }
